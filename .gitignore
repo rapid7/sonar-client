@@ -1,0 +1,21 @@
+*.gem
+*.rbc
+.bundle
+.config
+coverage
+lib/bundler/man
+pkg
+rdoc
+spec/reports
+spec/cassette
+test/tmp
+test/version_tmp
+tmp
+
+# OSX
+.DS_Store
+
+# YARD artifacts
+.yardoc
+_yardoc
+doc/
