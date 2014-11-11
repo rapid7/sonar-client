@@ -33,7 +33,7 @@ And then execute:
     # If you're using straight ruby (no Rails),
     # create a Sonar::Client Object
     options = {
-      api_url: 'https://sonar.labs.rapid7.com/api',
+      api_url: 'https://sonar.labs.rapid7.com',
       api_version: 'v2',
       access_token: 'YOURTOKEN',
       email: 'email@example.com'
