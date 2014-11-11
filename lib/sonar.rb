@@ -25,7 +25,6 @@ module Sonar
     def load_defaults
       self.api_url ||= 'https://sonar.labs.rapid7.com/api'
       self.api_version ||= 'v2'
-      self.access_token ||= 'ACTUAL_KEY'
     end
   end
 

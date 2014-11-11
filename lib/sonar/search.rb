@@ -4,14 +4,21 @@ module Sonar
   module Search
 
     ##
-    # Get search
-    #
-    # params[:access_token] required parameter
+    # Get rnds search
     #
     # @return [Hashie::Mash] with response of search
-    def get_search(params={})
+    def get_rdns(params={})
       params = extract_params(params)
-      get_endpoint(:search, params)
+      get_search_endpoint(:rdns, params)
+    end
+
+    ##
+    # Get fdns search
+    #
+    # @return [Hashie::Mash] with response of search
+    def get_fdns(params={})
+      params = extract_params(params)
+      get_search_endpoint(:fdns, params)
     end
   end
 end

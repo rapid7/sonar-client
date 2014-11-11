@@ -12,7 +12,7 @@ module Sonar
     include Certificate
     include Search
 
-    attr_reader :api_url, :api_version, :access_token, :email
+    attr_accessor :api_url, :api_version, :access_token, :email
 
     ##
     # Create a new Sonar::Client object
@@ -31,27 +31,35 @@ module Sonar
     # @return [Faraday::Connection]
     def connection
       params = {}
-      @connection = Faraday.new(url: api_url, params: params, headers: default_headers, ssl: {verify: true}) do |faraday|
+      @conn = Faraday.new(url: api_url, params: params, headers: default_headers, ssl: {verify: true}) do |faraday|
         faraday.use FaradayMiddleware::Mashify
         faraday.use FaradayMiddleware::ParseJson, content_type: /\bjson$/
         faraday.use FaradayMiddleware::FollowRedirects
         faraday.adapter Faraday.default_adapter
       end
+      @conn.headers['X-Sonar-Token'] = access_token
+      @conn.headers['X-Sonar-Email'] = email
+      @conn
     end
 
     ##
-    # Generic Pull of Sonar Objects
-    def get_endpoint(type, params={})
-      url = "/#{Sonar.api_version}/#{type.to_s}"
+    # Generic GET of Sonar search Objects
+    def get_search_endpoint(type, params={})
+      url = "/api/#{Sonar.api_version}/search/#{type.to_s}"
+      get(url, params)
+    end
 
+    ##
+    # Generic GET of Sonar Objects
+    def get_endpoint(type, params={})
+      url = "/api/#{Sonar.api_version}/#{type.to_s}"
       get(url, params)
     end
 
     ##
     # Generic POST to Sonar
     def post_to_sonar(type, params={})
-      url = "/#{Sonar.api_version}/#{type.to_s}"
-
+      url = "/api/#{Sonar.api_version}/#{type.to_s}"
       post(url, params)
     end
 

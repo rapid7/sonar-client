@@ -6,7 +6,7 @@ module Sonar
   module Request
 
     def extract_params(params)
-      Sonar.user_id = params.delete(:user_id) if params[:user_id]
+      # extract something from Sonar if needed
       params
     end
 
@@ -23,7 +23,6 @@ module Sonar
     end
 
     def request(method, path, options)
-      options[:access_token] = options[:access_token].nil? ? Sonar.access_token : options[:access_token]
       response = connection.send(method) do |request|
         case method
         when :get

@@ -9,7 +9,7 @@ module Sonar
     #
     # @return [Hashie::Mash] with response of certificate
     def get_certificate(options={})
-      response = get("/#{Sonar.api_version}/certificates/#{options[:sha1]}", options)
+      response = get("/api/#{Sonar.api_version}/certificates/#{options[:sha1]}", options)
       response if response
     end
   end

@@ -29,14 +29,18 @@ RSpec.configure do |c|
 
   c.treat_symbols_as_metadata_keys_with_true_values = true
 
-  ##
+  #
   # Add gem specific configuration for easy access
   #
   c.before(:each) do
     Sonar.configure do |config|
-      config.api_url          = 'https://sonar.labs.rapid7.com/api'
+      unless ENV['SONAR_TOKEN'] && ENV['SONAR_EMAIL']
+        raise ArgumentError, "Please configure Sonar for testing by setting SONAR_TOKEN, SONAR_EMAIL, and SONAR_API_URL in your environment."
+      end
+      config.api_url          = ENV['SONAR_API_URL'] || 'http://localhost:3000'
       config.api_version      = 'v2'
-      config.access_token     = 'asdfasdfasdfasdfasdf'
+      config.access_token     = ENV['SONAR_TOKEN']
+      config.email            = ENV['SONAR_EMAIL']
     end
   end
 end
