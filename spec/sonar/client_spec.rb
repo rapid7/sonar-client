@@ -9,4 +9,6 @@ describe Sonar::Client do
     client.connection.should be_kind_of Faraday::Connection
   end
 
+  describe "defaults"
+
 end

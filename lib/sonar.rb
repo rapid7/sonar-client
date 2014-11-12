@@ -23,8 +23,8 @@ module Sonar
     private
 
     def load_defaults
-      self.api_url ||= 'https://sonar.labs.rapid7.com/api'
-      self.api_version ||= 'v2'
+      self.api_url ||= "https://sonar.labs.rapid7.com"
+      self.api_version ||= "v2"
     end
   end
 

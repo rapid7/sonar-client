@@ -3,6 +3,7 @@ require 'forwardable'
 require 'sonar/request'
 require 'sonar/certificate'
 require 'sonar/search'
+require 'sonar/cli'
 
 module Sonar
   class Client
@@ -19,8 +20,8 @@ module Sonar
     #
     # @params options[Hash]
     def initialize(options={})
-      @api_url        = options[:api_url]       || Sonar.api_url
-      @api_version    = options[:api_version]   || Sonar.api_version || 'v1'
+      @api_url        = options[:api_url]       || Sonar.api_url       || "https://sonar.labs.rapid7.com"
+      @api_version    = options[:api_version]   || Sonar.api_version   || "v2"
       @access_token   = options[:access_token]  || Sonar.access_token
       @email          = options[:email]         || Sonar.email
     end

@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 module Sonar
-  class CLI
+  module CLI
 
     def self.start(*args)
     end
