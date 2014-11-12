@@ -1,4 +1,5 @@
-# Sonar
+labs-sonar-ruby
+===============
 
 Ruby API Wrapper and CLI for [Sonar](https://sonar.labs.rapid7.com)
 
