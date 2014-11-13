@@ -5,9 +5,23 @@ describe Sonar::Search do
 
   let(:client) { Sonar::Client.new }
 
+  context "with an invalid query type" do
+    it "should raise an ArgumentError" do
+      expect{ client.search(invalid: 'something.org') }.to raise_error(ArgumentError)
+    end
+  end
+
+  context "certificate" do
+    let(:resp) { client.search(certificate: '.hp.com') }
+
+    it "should provide certificate details" do
+      expect(resp).to have_key('collection')
+    end
+  end
+
   describe "rdns" do
     context "rdnsname" do
-      let(:resp) { client.get_rdns(q: '208.118.227.10.rapid7.com') }
+      let(:resp) { client.search(rdns: '208.118.227.10.rapid7.com') }
 
       it "returns hashie response of search" do
         expect(resp.class).to eq(Hashie::Mash)
@@ -19,7 +33,7 @@ describe Sonar::Search do
     end
 
     context "rdnsip" do
-      let(:resp) { client.get_rdns(q: '188.40.56.11') }
+      let(:resp) { client.search(rdns: '188.40.56.11') }
 
       it "rdnsip finds static.11.56.40.188.clients.your-server.de for 188.40.56.11" do
         expect(resp['collection'].any?{|x| x['name'] == 'static.11.56.40.188.clients.your-server.de'}).to be(true)
@@ -27,7 +41,7 @@ describe Sonar::Search do
     end
 
     context "validation" do
-      let(:resp) { client.get_rdns(q: '188.40.56.11@#&#') }
+      let(:resp) { client.search(rdns: '188.40.56.11@#&#') }
 
       it "should error for invalid domain query type" do
         expect(resp["error"]).to eq("Invalid query")
@@ -38,7 +52,7 @@ describe Sonar::Search do
 
   describe "fdns" do
     context "fdnsname" do
-      let(:resp) { client.get_fdns(q: 'rapid7.com') }
+      let(:resp) { client.search(fdns: 'rapid7.com') }
 
       it "returns hashie response of search" do
         expect(resp.class).to eq(Hashie::Mash)
@@ -50,7 +64,7 @@ describe Sonar::Search do
     end
 
     context "fdnsip" do
-      let(:resp) { client.get_fdns(q: '208.118.227.10') }
+      let(:resp) { client.search(fdns: '208.118.227.10') }
 
       it "finds fdnsip rapid7.com at 208.118.227.10" do
         expect(resp['collection'].any?{|x| x['address'] == 'rapid7.com'}).to be(true)
@@ -58,12 +72,52 @@ describe Sonar::Search do
     end
 
     context "validation" do
-      let(:resp) { client.get_fdns(q: '188.40.56.11@#&#') }
+      let(:resp) { client.search(fdns: '188.40.56.11@#&#') }
 
       it "should error for invalid domain query type" do
         expect(resp["error"]).to eq("Invalid query")
         expect(resp["errors"].first).to eq("Expected a domain but got '188.40.56.11@#&#'")
       end
+    end
+  end
+
+  context "links_to" do
+    let(:resp) { client.search(links_to: 'rapid7.com') }
+
+    it "should provide links_to details" do
+      expect(resp).to have_key('collection')
+    end
+  end
+
+  context "ipcerts" do
+    let(:resp) { client.search(ipcerts: '208.118.227.10') }
+
+    it "should provide ipcerts details" do
+      expect(resp).to have_key('collection')
+    end
+  end
+
+  context "certips" do
+    let(:resp) { client.search(certips: '1e80c24b97c928bb1db7d4d3c05475a6a40a1186') }
+
+    it "should provide certips details" do
+      expect(resp).to have_key('collection')
+    end
+  end
+
+  context "namecerts" do
+    let(:resp) { client.search(namecerts: '.rapid7.com') }
+
+    it "should provide namecerts details" do
+      expect(resp).to have_key('collection')
+    end
+  end
+
+  context "sslcert" do
+    let(:resp) { client.search(sslcert: '1e80c24b97c928bb1db7d4d3c05475a6a40a1186') }
+
+    it "should provide sslcert details" do
+      expect(resp).to have_key('collection')
     end
   end
 end

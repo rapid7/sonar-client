@@ -46,7 +46,7 @@ And then execute:
     client = Sonar::Client.new
 
     # Get fdns
-    client.get_fdns(q: 'rapid7.com')
+    client.search(fdns: 'rapid7.com')
     # => responds with a Hashie object
 ```
 
