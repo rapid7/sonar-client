@@ -120,4 +120,39 @@ describe Sonar::Search do
       expect(resp).to have_key('collection')
     end
   end
+
+  context "whois_ip" do
+    let(:resp) { client.search(whois_ip: '208.118.227.10')}
+
+    it "should find rapid7.com" do
+      expect(resp['name']).to eq('TWDX-208-118-227-0-1')
+    end
+  end
+
+  # TODO actually check response
+  context "raw" do
+    let(:resp) { client.search(raw: '208.118.227.10')}
+
+    it "should return a collection" do
+      expect(resp).to have_key('collection')
+    end
+  end
+
+  # TODO actually check response
+  context "processed" do
+    let(:resp) { client.search(processed: '208.118.227.10')}
+
+    it "should return a collection" do
+      expect(resp).to have_key('collection')
+    end
+  end
+
+  # TODO actually check response
+  context "ports" do
+    let(:resp) { client.search(ports: '208.118.227.10')}
+
+    it "should return a collection" do
+      expect(resp).to have_key('collection')
+    end
+  end
 end

@@ -13,6 +13,10 @@ module Sonar
       certips
       namecerts
       sslcert
+      whois_ip
+      raw
+      processed
+      ports
     )
 
     ##
