@@ -10,15 +10,15 @@ module Sonar
       params
     end
 
-    def get(path, options)
+    def get(path, options={})
       request(:get, path, options)
     end
 
-    def post(path, options)
+    def post(path, options={})
       request(:post, path, options)
     end
 
-    def put(path, options)
+    def put(path, options={})
       request(:put, path, options)
     end
 

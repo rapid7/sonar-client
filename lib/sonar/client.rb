@@ -3,6 +3,7 @@ require 'forwardable'
 require 'sonar/request'
 require 'sonar/certificate'
 require 'sonar/search'
+require 'sonar/user'
 require 'sonar/cli'
 
 module Sonar
@@ -12,6 +13,7 @@ module Sonar
     include Request
     include Certificate
     include Search
+    include User
 
     attr_accessor :api_url, :api_version, :access_token, :email
 
