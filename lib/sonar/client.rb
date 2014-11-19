@@ -48,21 +48,21 @@ module Sonar
     ##
     # Generic GET of Sonar search Objects
     def get_search_endpoint(type, params={})
-      url = "/api/#{Sonar.api_version}/search/#{type.to_s}"
+      url = "/api/#{api_version}/search/#{type.to_s}"
       get(url, params)
     end
 
     ##
     # Generic GET of Sonar Objects
     def get_endpoint(type, params={})
-      url = "/api/#{Sonar.api_version}/#{type.to_s}"
+      url = "/api/#{api_version}/#{type.to_s}"
       get(url, params)
     end
 
     ##
     # Generic POST to Sonar
     def post_to_sonar(type, params={})
-      url = "/api/#{Sonar.api_version}/#{type.to_s}"
+      url = "/api/#{api_version}/#{type.to_s}"
       post(url, params)
     end
 

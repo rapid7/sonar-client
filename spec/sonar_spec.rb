@@ -7,6 +7,8 @@ describe Sonar, skip_autoconfig: true do
   let(:client) { Sonar::Client.new }
 
   context "configure defaults" do
+    before { Sonar.api_url = nil }
+
     it "uses default API URL" do
       expect(client.api_url).to eq 'https://sonar.labs.rapid7.com'
     end
@@ -60,7 +62,7 @@ describe Sonar, skip_autoconfig: true do
         c.api_url = "https://sonar-staging.labs.rapid7.com"
       end
       client = Sonar::Client.new
-      @resp = client.get_rdns(q: "hp.com")
+      @resp = client.search(rdns: "hp.com")
     end
 
     it "should return unauthorized" do
