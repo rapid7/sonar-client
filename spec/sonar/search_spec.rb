@@ -11,6 +11,16 @@ describe Sonar::Search do
     end
   end
 
+  # The default size from APIv1 is 1,000 records
+  context "specifying the :limit to 3000 on #search" do
+    let(:resp) { client.search(rdns: '.hp.com', limit: 3000) }
+
+    it "should return all records" do
+      puts resp
+      expect(resp['collection'].length).to eq(2000)
+    end
+  end
+
   context "certificate" do
     let(:resp) { client.search(certificate: '.hp.com') }
 

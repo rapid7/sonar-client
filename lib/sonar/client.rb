@@ -49,7 +49,23 @@ module Sonar
     # Generic GET of Sonar search Objects
     def get_search_endpoint(type, params={})
       url = "/api/#{api_version}/search/#{type.to_s}"
-      get(url, params)
+      if params[:limit]
+        more = true
+        records_rcvd = 0
+        collected_resp = nil
+        while more && records_rcvd <= params[:limit] do
+          resp = get(url, params)
+          collected_resp ||= resp
+          params[:iterator_id] = resp.iterator_id
+          records_rcvd += resp['collection'].length
+          more = resp.more
+          # TODO This merging is messed up!
+          collected_resp['collection'] << resp['collection']
+        end
+        collected_resp
+      else
+        get(url, params)
+      end
     end
 
     ##
