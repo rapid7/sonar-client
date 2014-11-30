@@ -6,38 +6,44 @@ describe Sonar::Search do
   let(:client) { Sonar::Client.new }
 
   describe "parameters" do
-    context "with an invalid query type" do
-      it "should raise an ArgumentError" do
-        expect{ client.search(invalid: 'something.org') }.to raise_error(ArgumentError)
+    describe "query type" do
+      context "with an invalid query type" do
+        it "should raise an ArgumentError" do
+          expect{ client.search(invalid: 'something.org') }.to raise_error(ArgumentError)
+        end
       end
     end
 
-    it "shouldn't match anything when #exact is true" do
-      resp = client.search(rdns: "1.1.", exact: true)
-      expect(resp["collection"].size).to eq(0)
-    end
-
-    it "should match when #exact is false" do
-      resp = client.search(rdns: "1.1.", exact: false)
-      expect(resp["collection"].first["address"]).to match(/^1.1./)
-    end
-  end
-
-  # The default size from APIv1/v2 is 1,000 records
-  context "specifying the :limit to 3000 on #search" do
-    let(:resp) { client.search(rdns: '.hp.com', limit: 3000) }
-
-    it "should return a RequestIterator" do
-      expect(resp.class).to eq(Sonar::Request::RequestIterator)
-    end
-
-    it "should return 3 x 1,000-record blocks" do
-      num_blocks = 0
-      resp.each do |resp_block|
-        expect(resp_block['collection'].size).to eq(1000)
-        num_blocks += 1
+    describe "exact" do
+      it "shouldn't match anything when #exact is true" do
+        resp = client.search(rdns: "1.1.", exact: true)
+        expect(resp["collection"].size).to eq(0)
       end
-      expect(num_blocks).to eq(3)
+
+      it "should match when #exact is false" do
+        resp = client.search(rdns: "1.1.", exact: false)
+        expect(resp["collection"].first["address"]).to match(/^1.1./)
+      end
+    end
+
+    describe "limit" do
+      # The default size from APIv1/v2 is 1,000 records
+      context "specifying the :limit to 3000 on #search" do
+        let(:resp) { client.search(rdns: '.hp.com', limit: 3000) }
+
+        it "should return a RequestIterator" do
+          expect(resp.class).to eq(Sonar::Request::RequestIterator)
+        end
+
+        it "should return 3 x 1,000-record blocks" do
+          num_blocks = 0
+          resp.each do |resp_block|
+            expect(resp_block['collection'].size).to eq(1000)
+            num_blocks += 1
+          end
+          expect(num_blocks).to eq(3)
+        end
+      end
     end
   end
 
