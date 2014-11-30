@@ -24,6 +24,7 @@ module Sonar
 
     def request(method, path, options)
       response = connection.send(method) do |request|
+        options.delete(:connection)
         case method
         when :get
           request.url(path, options)
@@ -34,6 +35,32 @@ module Sonar
       end
 
       response.body
+    end
+
+    class RequestIterator
+      include Request
+
+      attr_accessor :url, :connection, :params
+
+      def initialize(url, connection, params={})
+        self.url = url
+        self.connection = connection
+        self.params = params
+      end
+
+      def each
+        more = true
+        records_rcvd = 0
+        while more && records_rcvd < params[:limit] do
+          # TODO refactor to not pass around the connection
+          params[:connection] = connection
+          resp = get(url, params)
+          params[:iterator_id] = resp.iterator_id
+          records_rcvd += resp['collection'].size
+          more = resp['more']
+          yield resp
+        end
+      end
     end
 
   end

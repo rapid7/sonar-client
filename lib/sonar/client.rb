@@ -49,7 +49,11 @@ module Sonar
     # Generic GET of Sonar search Objects
     def get_search_endpoint(type, params={})
       url = "/api/#{api_version}/search/#{type.to_s}"
-      get(url, params)
+      if params[:limit]
+        RequestIterator.new(url, connection, params)
+      else
+        get(url, params)
+      end
     end
 
     ##

@@ -23,6 +23,24 @@ describe Sonar::Search do
     end
   end
 
+  # The default size from APIv1/v2 is 1,000 records
+  context "specifying the :limit to 3000 on #search" do
+    let(:resp) { client.search(rdns: '.hp.com', limit: 3000) }
+
+    it "should return a RequestIterator" do
+      expect(resp.class).to eq(Sonar::Request::RequestIterator)
+    end
+
+    it "should return 3 x 1,000-record blocks" do
+      num_blocks = 0
+      resp.each do |resp_block|
+        expect(resp_block['collection'].size).to eq(1000)
+        num_blocks += 1
+      end
+      expect(num_blocks).to eq(3)
+    end
+  end
+
   context "certificate" do
     let(:resp) { client.search(certificate: '.hp.com') }
 
