@@ -5,9 +5,21 @@ describe Sonar::Search do
 
   let(:client) { Sonar::Client.new }
 
-  context "with an invalid query type" do
-    it "should raise an ArgumentError" do
-      expect{ client.search(invalid: 'something.org') }.to raise_error(ArgumentError)
+  describe "parameters" do
+    context "with an invalid query type" do
+      it "should raise an ArgumentError" do
+        expect{ client.search(invalid: 'something.org') }.to raise_error(ArgumentError)
+      end
+    end
+
+    it "shouldn't match anything when #exact is true" do
+      resp = client.search(rdns: "1.1.", exact: true)
+      expect(resp["collection"].size).to eq(0)
+    end
+
+    it "should match when #exact is false" do
+      resp = client.search(rdns: "1.1.", exact: false)
+      expect(resp["collection"].first["address"]).to match(/^1.1./)
     end
   end
 
