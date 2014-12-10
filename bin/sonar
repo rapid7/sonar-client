@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require 'sonar'
+
+begin
+  Sonar::CLI.start(ARGV)
+rescue Interrupt
+  puts 'Quitting...'
+end

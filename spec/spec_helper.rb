@@ -33,7 +33,8 @@ RSpec.configure do |c|
   # Add gem specific configuration for easy access
   #
   c.before(:each) do
-    unless example.metadata[:skip_autoconfig]
+    # TODO fix below
+    #unless example.metadata[:skip_autoconfig]
       Sonar.configure do |config|
         unless ENV['SONAR_TOKEN'] && ENV['SONAR_EMAIL']
           raise ArgumentError, "Please configure Sonar for testing by setting SONAR_TOKEN, SONAR_EMAIL, and SONAR_API_URL in your environment."
@@ -43,6 +44,6 @@ RSpec.configure do |c|
         config.access_token     = ENV['SONAR_TOKEN']
         config.email            = ENV['SONAR_EMAIL']
       end
-    end
+    #end
   end
 end

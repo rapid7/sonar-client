@@ -4,7 +4,7 @@ require 'sonar/request'
 require 'sonar/certificate'
 require 'sonar/search'
 require 'sonar/user'
-require 'sonar/cli'
+require 'sonar/cli/cli'
 
 module Sonar
   class Client

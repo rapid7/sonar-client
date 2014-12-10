@@ -3,8 +3,7 @@
 module Sonar
   module User
     def usage
-      url = "/api/#{Sonar.api_version}/search/usage"
-      get(url)
+      get_search_endpoint("usage")
     end
   end
 end

@@ -17,7 +17,7 @@ And then execute:
 
     $ bundle install
 
-## Usage
+## Gem usage
 
 ```ruby
     require 'sonar'
@@ -49,6 +49,11 @@ And then execute:
     client.search(fdns: 'rapid7.com')
     # => responds with a Hashie object
 ```
+
+## CLI usage
+
+Typing `sonar help` will list all the available commands. You can type `sonar help TASK` to get help for a specific command.
+
 
 ## Contributing
 
