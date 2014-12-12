@@ -51,3 +51,8 @@ end
 def fixtures_path
   File.expand_path('../fixtures', __FILE__)
 end
+
+def reset_sonar_config
+  Sonar.api_version = nil
+  Sonar.api_url = nil
+end

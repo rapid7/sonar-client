@@ -5,10 +5,11 @@ require 'spec_helper'
 describe Sonar, skip_autoconfig: true do
 
   let(:client) { Sonar::Client.new }
+  before :each do
+    reset_sonar_config
+  end
 
   context "configure defaults" do
-    before { Sonar.api_url = nil }
-
     it "uses default API URL" do
       expect(client.api_url).to eq 'https://sonar.labs.rapid7.com'
     end
@@ -47,10 +48,6 @@ describe Sonar, skip_autoconfig: true do
     it "should use the default api_url" do
       expect(Sonar.api_url).to eq("https://sonar.labs.rapid7.com")
     end
-
-    after do
-      Sonar.api_version = nil
-    end
   end
 
   context "when making a request to the client with bad creds" do
@@ -67,11 +64,6 @@ describe Sonar, skip_autoconfig: true do
 
     it "should return unauthorized" do
       expect(@resp["error"]).to eq("Could not authenticate")
-    end
-
-    after do
-      Sonar.api_version = nil
-      Sonar.api_url = nil
     end
   end
 end
