@@ -1,8 +1,11 @@
 # encoding: utf-8
+require "singleton"
 
 module Sonar
   class RCFile
-    attr_reader :path
+    include Singleton
+
+    attr_accessor :path
     FILENAME = 'sonar.rc'
 
     def initialize

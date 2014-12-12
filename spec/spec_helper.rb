@@ -47,3 +47,7 @@ RSpec.configure do |c|
     #end
   end
 end
+
+def fixtures_path
+  File.expand_path('../fixtures', __FILE__)
+end

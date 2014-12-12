@@ -10,7 +10,7 @@ module Sonar
       desc: 'Path to Sonar RC file', banner: 'FILE'
 
     def initialize(*)
-      @rcfile = Sonar::RCFile.new.load_file
+      @rcfile = Sonar::RCFile.instance.load_file
       @client = Sonar::Client.new(email: @rcfile["email"], access_token: @rcfile["access_token"], api_url: @rcfile["api_url"])
       super
     end
