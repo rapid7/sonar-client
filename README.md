@@ -50,10 +50,19 @@ And then execute:
     # => responds with a Hashie object
 ```
 
+## CLI dev setup
+
+From the project root directory
+```
+$ rake install
+sonar 0.0.1 built to pkg/sonar-0.0.1.gem.
+sonar (0.0.1) installed.
+$ bundle exec sonar
+```
+
 ## CLI usage
 
 Typing `sonar help` will list all the available commands. You can type `sonar help TASK` to get help for a specific command.
-
 
 ## Contributing
 

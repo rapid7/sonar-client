@@ -2,6 +2,7 @@
 
 require 'thor'
 require 'sonar/cli/rcfile'
+require 'awesome_print'
 
 module Sonar
   class CLI < Thor
@@ -15,21 +16,21 @@ module Sonar
       super
     end
 
-    # TODO add something to set config
+    # TODO add a way to set config
 
     desc 'profile', 'Display the current profile from sonar.rc'
     def profile
-      puts @rcfile
+      ap @rcfile
     end
 
     desc 'usage', 'Display API usage for current user.'
     def usage
-      puts @client.usage
+      ap @client.usage
     end
 
     desc 'search', 'Search anything from Sonar.'
     def search
-      puts @client.search(fdns: '.hp.com')
+      ap @client.search(fdns: '.hp.com')
     end
   end
 end

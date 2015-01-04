@@ -3,6 +3,7 @@ PATH
   specs:
     sonar (0.0.1)
       activesupport
+      awesome_print
       faraday_middleware (~> 0.9.0)
       hashie (~> 2.0.3)
       multi_json
@@ -22,6 +23,7 @@ GEM
       activesupport (>= 3.2.5)
       nokogiri (>= 1.5.2)
       rspec (>= 2.14)
+    awesome_print (1.6.1)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     diff-lcs (1.2.5)
