@@ -33,18 +33,18 @@ RSpec.configure do |c|
   # Add gem specific configuration for easy access
   #
   c.before(:each) do
-    # TODO fix below
-    #unless example.metadata[:skip_autoconfig]
-      Sonar.configure do |config|
-        unless ENV['SONAR_TOKEN'] && ENV['SONAR_EMAIL']
-          raise ArgumentError, "Please configure Sonar for testing by setting SONAR_TOKEN, SONAR_EMAIL, and SONAR_API_URL in your environment."
-        end
-        config.api_url          = ENV['SONAR_API_URL'] || 'http://localhost:3000'
-        config.api_version      = 'v2'
-        config.access_token     = ENV['SONAR_TOKEN']
-        config.email            = ENV['SONAR_EMAIL']
+    # TODO move to using a gem like VCR for faking HTTP requests.
+    # For now we'll test against the staging server using
+    # real creds stored in env.
+    Sonar.configure do |config|
+      unless ENV['SONAR_TOKEN'] && ENV['SONAR_EMAIL']
+        raise ArgumentError, "Please configure Sonar for testing by setting SONAR_TOKEN, SONAR_EMAIL, and SONAR_API_URL in your environment."
       end
-    #end
+      config.api_url          = ENV['SONAR_API_URL'] || 'http://localhost:3000'
+      config.api_version      = 'v2'
+      config.access_token     = ENV['SONAR_TOKEN']
+      config.email            = ENV['SONAR_EMAIL']
+    end
   end
 end
 
