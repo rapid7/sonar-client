@@ -2,7 +2,6 @@ PATH
   remote: .
   specs:
     sonar (0.0.1)
-      activesupport
       awesome_print
       faraday_middleware (~> 0.9.0)
       hashie (~> 2.0.3)
@@ -12,11 +11,11 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (4.1.8)
-      i18n (~> 0.6, >= 0.6.9)
+    activesupport (4.2.0)
+      i18n (~> 0.7)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
-      thread_safe (~> 0.1)
+      thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     addressable (2.3.6)
     api_matchers (0.5.1)
@@ -33,10 +32,10 @@ GEM
     faraday_middleware (0.9.1)
       faraday (>= 0.7.4, < 0.10)
     hashie (2.0.5)
-    i18n (0.6.11)
+    i18n (0.7.0)
     json (1.8.1)
-    mini_portile (0.6.1)
-    minitest (5.4.3)
+    mini_portile (0.6.2)
+    minitest (5.5.0)
     multi_json (1.10.1)
     multipart-post (2.0.0)
     nokogiri (1.6.5)

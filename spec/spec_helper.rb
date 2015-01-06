@@ -1,4 +1,5 @@
 require 'sonar'
+require 'active_support'
 require 'vcr'
 require 'simplecov'
 require 'simplecov-rcov'
