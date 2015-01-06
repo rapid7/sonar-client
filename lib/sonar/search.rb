@@ -4,20 +4,20 @@ module Sonar
   module Search
 
     # Implemented search query types
-    QUERY_TYPES = %i(
-      certificate
-      rdns
-      fdns
-      links_to
-      ipcerts
-      certips
-      namecerts
-      sslcert
-      whois_ip
-      raw
-      processed
-      ports
-    )
+    QUERY_TYPES_MAP = {
+      'certificate' => 'Certificate lookup',
+      'certips'     => 'Certificate to IPs',
+      'rdns'        => 'IP to Reverse DNS Lookup or DNS Lookup to IP',
+      'fdns'        => 'Domains to IP or IPs to Domain',
+      'ipcerts'     => 'IP to Certificates',
+      'namecerts'   => 'Domain to Certificates',
+      'links_to'    => 'HTTP References to Domain',
+      'ports'       => 'Open Ports',
+      'processed'   => 'Open Ports (Processed)',
+      'raw'         => 'Open Ports (Raw)',
+      'sslcert'     => 'Certificate Details',
+      'whois_ip'    => 'Whois (IP)'
+    }
 
     ##
     # Get search
@@ -27,7 +27,7 @@ module Sonar
     #
     # @return [Hashie::Mash] with response of search
     def search(params={})
-      type_query = params.select {|k,v| QUERY_TYPES.include?(k) }.first
+      type_query = params.select {|k,v| QUERY_TYPES_MAP.keys.include?(k.to_s) }.first
       raise ArgumentError, "The query type provided is invalid or not yet implemented." unless type_query
       type = type_query[0].to_sym
       params[:q] = type_query[1]

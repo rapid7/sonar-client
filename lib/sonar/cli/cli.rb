@@ -28,9 +28,16 @@ module Sonar
       ap @client.usage
     end
 
-    desc 'search', 'Search anything from Sonar.'
-    def search
-      ap @client.search(fdns: '.hp.com')
+    desc 'search [QUERY TYPE] [QUERY TERM]', 'Search anything from Sonar.'
+    def search(type, term)
+      @query = {}
+      @query[type.to_sym] = term
+      ap @client.search(@query)
+    end
+
+    desc 'types', 'List all Sonar query types.'
+    def types
+      ap Search::QUERY_TYPES_MAP
     end
   end
 end
