@@ -62,7 +62,7 @@ $ bundle exec sonar
 
 ## CLI usage
 
-Typing `sonar help` will list all the available commands. You can type `sonar help TASK` to get help for a specific command.  If running locally from the project, you may need to prefix `sonar` commands with `bundle exec`.
+Typing `sonar help` will list all the available commands. You can type `sonar help TASK` to get help for a specific command.  If running locally from the root project directory, you may need to prefix `sonar` commands with `bundle exec`.  A rdns search command might look like `bundle exec sonar search rdns .rapid7.com`.
 
 ## Contributing
 
