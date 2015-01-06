@@ -62,7 +62,7 @@ $ bundle exec sonar
 
 ## CLI usage
 
-Typing `sonar help` will list all the available commands. You can type `sonar help TASK` to get help for a specific command.
+Typing `sonar help` will list all the available commands. You can type `sonar help TASK` to get help for a specific command.  If running locally from the project, you may need to prefix `sonar` commands with `bundle exec`.
 
 ## Contributing
 
