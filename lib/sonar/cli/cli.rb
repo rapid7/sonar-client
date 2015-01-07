@@ -39,5 +39,9 @@ module Sonar
     def types
       ap Search::QUERY_TYPES_MAP
     end
+
+    desc 'config', 'Update Sonar config file'
+    def config
+    end
   end
 end
