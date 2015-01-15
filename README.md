@@ -55,10 +55,18 @@ And then execute:
 From the project root directory
 ```
 $ rake install
-sonar 0.0.1 built to pkg/sonar-0.0.1.gem.
-sonar (0.0.1) installed.
-$ bundle exec sonar
+sonar-client 0.0.1 built to pkg/sonar-client-0.0.1.gem.
+sonar-client (0.0.1) installed.
+$ sonar
 ```
+
+On the first run, sonar will setup a sonar.rc config file in your user folder.  Run `sonar config` to view the full path to your config file.  Here's what your file will look like when it's first created:
+```
+email: YOUR_EMAIL
+access_token: SONAR_TOKEN
+api_url: https://sonar.labs.rapid7.com
+```
+Replace YOUR_EMAIL with the email you used to register on the [Sonar website](https://sonar.labs.rapid7.com).  Replace SONAR_TOKEN with your API token found on the [Settings page](https://sonar.labs.rapid7.com/users/edit) of the Sonar website.  Enclosing quotes around these two credentials are not needed.
 
 ## CLI usage
 
