@@ -3,7 +3,6 @@ require 'spec_helper'
 
 # Skip the configure in spec_helper so we can test defaults
 describe Sonar, skip_autoconfig: true do
-
   let(:client) { Sonar::Client.new }
   before :each do
     reset_sonar_config
@@ -13,22 +12,22 @@ describe Sonar, skip_autoconfig: true do
     it "uses default API URL" do
       expect(client.api_url).to eq 'https://sonar.labs.rapid7.com'
     end
-
     it "uses default API VERSION" do
       expect(client.api_version).to eq 'v2'
     end
   end
 
   context "handles custom configuration for url and version" do
-    let(:new_client) { Sonar::Client.new(
-      api_url: 'https://somethingnew.com',
-      api_version: 'v1'
-    )}
+    let(:new_client) do
+      Sonar::Client.new(
+        api_url: 'https://somethingnew.com',
+        api_version: 'v1'
+      )
+    end
 
     it "::Client API_URL configuration" do
       expect(new_client.api_url).to eq 'https://somethingnew.com'
     end
-
     it "::Client API_VERSION configuration" do
       expect(new_client.api_version).to eq 'v1'
     end
@@ -44,7 +43,6 @@ describe Sonar, skip_autoconfig: true do
     it "should have set the custom api_version" do
       expect(Sonar.api_version).to eq("v3")
     end
-
     it "should use the default api_url" do
       expect(Sonar.api_url).to eq("https://sonar.labs.rapid7.com")
     end

@@ -8,5 +8,4 @@ describe Sonar::Client do
   it "creates a Faraday::Connection" do
     expect(client.connection).to be_kind_of Faraday::Connection
   end
-
 end

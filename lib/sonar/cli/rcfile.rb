@@ -24,9 +24,7 @@ module Sonar
     end
 
     def load_file
-      unless File.exists?(@path)
-        create_file
-      end
+      create_file unless File.exists?(@path)
       YAML.load_file(@path)
     end
   end

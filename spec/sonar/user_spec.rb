@@ -2,7 +2,6 @@
 require 'spec_helper'
 
 describe Sonar::User do
-
   let(:client) { Sonar::Client.new }
 
   context "with a valid client querying usage" do

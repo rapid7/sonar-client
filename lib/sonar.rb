@@ -5,7 +5,6 @@ require "sonar/client"
 require "sonar/version"
 
 module Sonar
-
   class << self
     attr_accessor :api_url, :api_version, :access_token, :email
 
@@ -26,5 +25,4 @@ module Sonar
       self.api_version ||= "v2"
     end
   end
-
 end

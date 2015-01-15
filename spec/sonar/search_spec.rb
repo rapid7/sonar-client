@@ -9,7 +9,7 @@ describe Sonar::Search do
     describe "query type" do
       context "with an invalid query type" do
         it "should raise an ArgumentError" do
-          expect{ client.search(invalid: 'something.org') }.to raise_error(ArgumentError)
+          expect { client.search(invalid: 'something.org') }.to raise_error(ArgumentError)
         end
       end
     end
@@ -19,7 +19,6 @@ describe Sonar::Search do
         resp = client.search(rdns: "1.1.", exact: true)
         expect(resp["collection"].size).to eq(0)
       end
-
       it "should match when #exact is false" do
         resp = client.search(rdns: "1.1.", exact: false)
         expect(resp["collection"].first["address"]).to match(/^1.1./)
@@ -34,7 +33,6 @@ describe Sonar::Search do
         it "should return a RequestIterator" do
           expect(resp.class).to eq(Sonar::Request::RequestIterator)
         end
-
         it "should return 3 x 1,000-record blocks" do
           num_blocks = 0
           resp.each do |resp_block|
@@ -62,9 +60,8 @@ describe Sonar::Search do
       it "returns hashie response of search" do
         expect(resp.class).to eq(Hashie::Mash)
       end
-
       it "rdnsname finds 208.118.227.10 for 208.118.227.10.rapid7.com" do
-        expect(resp['collection'].any?{|x| x['address'] == '208.118.227.10'}).to be(true)
+        expect(resp['collection'].any? { |x| x['address'] == '208.118.227.10' }).to be(true)
       end
     end
 
@@ -72,7 +69,7 @@ describe Sonar::Search do
       let(:resp) { client.search(rdns: '188.40.56.11') }
 
       it "rdnsip finds static.11.56.40.188.clients.your-server.de for 188.40.56.11" do
-        expect(resp['collection'].any?{|x| x['name'] == 'static.11.56.40.188.clients.your-server.de'}).to be(true)
+        expect(resp['collection'].any? { |x| x['name'] == 'static.11.56.40.188.clients.your-server.de' }).to be(true)
       end
     end
 
@@ -93,9 +90,8 @@ describe Sonar::Search do
       it "returns hashie response of search" do
         expect(resp.class).to eq(Hashie::Mash)
       end
-
       it "finds fdnsname 208.118.227.10 for rapid7.com" do
-        expect(resp['collection'].any?{|x| x['address'] == '208.118.227.10'}).to be(true)
+        expect(resp['collection'].any? { |x| x['address'] == '208.118.227.10' }).to be(true)
       end
     end
 
@@ -103,7 +99,7 @@ describe Sonar::Search do
       let(:resp) { client.search(fdns: '208.118.227.10') }
 
       it "finds fdnsip rapid7.com at 208.118.227.10" do
-        expect(resp['collection'].any?{|x| x['address'] == 'rapid7.com'}).to be(true)
+        expect(resp['collection'].any? { |x| x['address'] == 'rapid7.com' }).to be(true)
       end
     end
 
@@ -158,34 +154,34 @@ describe Sonar::Search do
   end
 
   context "whois_ip" do
-    let(:resp) { client.search(whois_ip: '208.118.227.10')}
+    let(:resp) { client.search(whois_ip: '208.118.227.10') }
 
     it "should find rapid7.com" do
       expect(resp['name']).to eq('TWDX-208-118-227-0-1')
     end
   end
 
-  # TODO actually check response
+  # TODO: actually check response
   context "raw" do
-    let(:resp) { client.search(raw: '208.118.227.10')}
+    let(:resp) { client.search(raw: '208.118.227.10') }
 
     it "should return a collection" do
       expect(resp).to have_key('collection')
     end
   end
 
-  # TODO actually check response
+  # TODO: actually check response
   context "processed" do
-    let(:resp) { client.search(processed: '208.118.227.10')}
+    let(:resp) { client.search(processed: '208.118.227.10') }
 
     it "should return a collection" do
       expect(resp).to have_key('collection')
     end
   end
 
-  # TODO actually check response
+  # TODO: actually check response
   context "ports" do
-    let(:resp) { client.search(ports: '208.118.227.10')}
+    let(:resp) { client.search(ports: '208.118.227.10') }
 
     it "should return a collection" do
       expect(resp).to have_key('collection')
