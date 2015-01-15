@@ -40,6 +40,7 @@ module Sonar
     desc 'config', 'Update Sonar config file'
     def config
       # TODO: add a way to set config
+      puts "Your config file is located at #{RCFile.instance.path}"
     end
   end
 end
