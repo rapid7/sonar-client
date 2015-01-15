@@ -3,21 +3,20 @@ require 'multi_json'
 
 module Sonar
   module Request
-
     def extract_params(params)
       # extract something from Sonar if needed
       params
     end
 
-    def get(path, options= {})
+    def get(path, options = {})
       request(:get, path, options)
     end
 
-    def post(path, options= {})
+    def post(path, options = {})
       request(:post, path, options)
     end
 
-    def put(path, options= {})
+    def put(path, options = {})
       request(:put, path, options)
     end
 
@@ -41,7 +40,7 @@ module Sonar
 
       attr_accessor :url, :connection, :params
 
-      def initialize(url, connection, params= {})
+      def initialize(url, connection, params = {})
         self.url = url
         self.connection = connection
         self.params = params
@@ -50,8 +49,8 @@ module Sonar
       def each
         more = true
         records_rcvd = 0
-        while more && records_rcvd < params[:limit] do
-          # TODO refactor to not pass around the connection
+        while more && records_rcvd < params[:limit]
+          # TODO: refactor to not pass around the connection
           params[:connection] = connection
           resp = get(url, params)
           params[:iterator_id] = resp.iterator_id

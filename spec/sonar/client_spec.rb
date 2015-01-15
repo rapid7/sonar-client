@@ -2,7 +2,6 @@
 require 'spec_helper'
 
 describe Sonar::Client do
-
   let(:client) { Sonar::Client.new }
 
   it "creates a Faraday::Connection" do

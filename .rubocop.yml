@@ -1,0 +1,7 @@
+Style/StringLiterals:
+  Enabled: false
+  Description: 'Single quotes are preferred when string interpolation is not needed.'
+
+Metrics/LineLength:
+  Enabled: true
+  Max: 120

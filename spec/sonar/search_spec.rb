@@ -2,7 +2,6 @@
 require 'spec_helper'
 
 describe Sonar::Search do
-
   let(:client) { Sonar::Client.new }
 
   describe "parameters" do

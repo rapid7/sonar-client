@@ -21,7 +21,7 @@ module Sonar
     # Create a new Sonar::Client object
     #
     # @params options[Hash]
-    def initialize(options={})
+    def initialize(options = {})
       @api_url        = options[:api_url]       || Sonar.api_url       || "https://sonar.labs.rapid7.com"
       @api_version    = options[:api_version]   || Sonar.api_version   || "v2"
       @access_token   = options[:access_token]  || Sonar.access_token
@@ -34,7 +34,7 @@ module Sonar
     # @return [Faraday::Connection]
     def connection
       params = {}
-      @conn = Faraday.new(url: api_url, params: params, headers: default_headers, ssl: {verify: true}) do |faraday|
+      @conn = Faraday.new(url: api_url, params: params, headers: default_headers, ssl: { verify: true }) do |faraday|
         faraday.use FaradayMiddleware::Mashify
         faraday.use FaradayMiddleware::ParseJson, content_type: /\bjson$/
         faraday.use FaradayMiddleware::FollowRedirects
@@ -47,8 +47,8 @@ module Sonar
 
     ##
     # Generic GET of Sonar search Objects
-    def get_search_endpoint(type, params={})
-      url = "/api/#{api_version}/search/#{type.to_s}"
+    def get_search_endpoint(type, params = {})
+      url = "/api/#{api_version}/search/#{type}"
       if params[:limit]
         RequestIterator.new(url, connection, params)
       else
@@ -58,15 +58,15 @@ module Sonar
 
     ##
     # Generic GET of Sonar Objects
-    def get_endpoint(type, params={})
-      url = "/api/#{api_version}/#{type.to_s}"
+    def get_endpoint(type, params = {})
+      url = "/api/#{api_version}/#{type}"
       get(url, params)
     end
 
     ##
     # Generic POST to Sonar
-    def post_to_sonar(type, params={})
-      url = "/api/#{api_version}/#{type.to_s}"
+    def post_to_sonar(type, params = {})
+      url = "/api/#{api_version}/#{type}"
       post(url, params)
     end
 
@@ -79,6 +79,5 @@ module Sonar
         user_agent: "Sonar #{Sonar::VERSION} Ruby Gem"
       }
     end
-
   end
 end

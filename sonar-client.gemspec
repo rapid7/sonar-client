@@ -8,12 +8,12 @@ Gem::Specification.new do |spec|
   spec.version       = Sonar::VERSION
   spec.authors       = ["Paul Deardorff & HD Moore"]
   spec.email         = ["paul_deardorff@rapid7.com", "hd_moore@rapid7.com"]
-  spec.description   = %q{API Wrapper for Sonar}
+  spec.description   = 'API Wrapper for Sonar'
   spec.summary       = spec.description
   spec.homepage      = "https://sonar.labs.rapid7.com"
   spec.license       = "MIT"
 
-  spec.files         = `git ls-files`.split($/)
+  spec.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
   spec.executables   = ["sonar"]
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]

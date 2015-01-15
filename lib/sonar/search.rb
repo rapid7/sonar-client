@@ -2,7 +2,6 @@
 
 module Sonar
   module Search
-
     # Implemented search query types
     QUERY_TYPES_MAP = {
       'certificate' => 'Certificate lookup',
@@ -26,14 +25,13 @@ module Sonar
     # {fdns: 'rapid7.com'}
     #
     # @return [Hashie::Mash] with response of search
-    def search(params={})
-      type_query = params.select {|k,v| QUERY_TYPES_MAP.keys.include?(k.to_s) }.first
-      raise ArgumentError, "The query type provided is invalid or not yet implemented." unless type_query
+    def search(params = {})
+      type_query = params.select { |k, _v| QUERY_TYPES_MAP.keys.include?(k.to_s) }.first
+      fail ArgumentError, "The query type provided is invalid or not yet implemented." unless type_query
       type = type_query[0].to_sym
       params[:q] = type_query[1]
       params = extract_params(params)
       get_search_endpoint(type, params)
     end
-
   end
 end
