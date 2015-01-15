@@ -4,8 +4,6 @@ require "sonar/cli/cli"
 require "sonar/client"
 require "sonar/version"
 
-directory = File.expand_path(File.dirname(__FILE__))
-
 module Sonar
 
   class << self

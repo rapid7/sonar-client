@@ -15,7 +15,7 @@ describe Sonar::CLI do
     before do
       Sonar::RCFile.instance.path = ""
     end
-    it "should create the missing config file" do
+    xit "should create the missing config file" do
     end
   end
 end

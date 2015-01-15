@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'sonar/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "sonar"
+  spec.name          = "sonar-client"
   spec.version       = Sonar::VERSION
   spec.authors       = ["Paul Deardorff & HD Moore"]
   spec.email         = ["paul_deardorff@rapid7.com", "hd_moore@rapid7.com"]

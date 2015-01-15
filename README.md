@@ -1,4 +1,4 @@
-labs-sonar-ruby
+sonar-client
 ===============
 
 Ruby API Wrapper and CLI for [Sonar](https://sonar.labs.rapid7.com)
@@ -7,11 +7,11 @@ Ruby API Wrapper and CLI for [Sonar](https://sonar.labs.rapid7.com)
 
 Install the gem by running
 
-    gem install sonar
+    gem install sonar-client
 
 or add this line to your application's Gemfile:
 
-    gem 'sonar'
+    gem 'sonar-client'
 
 And then execute:
 
