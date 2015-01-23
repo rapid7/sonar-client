@@ -20,6 +20,7 @@ module Sonar
         f.puts 'access_token: SONAR_TOKEN'
         f.puts 'api_url: https://sonar.labs.rapid7.com'
         f.puts 'format: flat'
+        f.puts 'record_limit: 10000'
       end
       puts "Config file setup at: #{@path}"
     end

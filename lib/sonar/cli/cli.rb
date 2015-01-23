@@ -27,11 +27,14 @@ module Sonar
     end
 
     desc 'search [QUERY TYPE] [QUERY TERM]', 'Search anything from Sonars'
-    method_option :records, type: :numeric, aliases: '-n', desc: 'Maximum number of records to fetch'
+    method_option 'record_limit', type: :numeric, aliases: '-n', desc: 'Maximum number of records to fetch'
     def search(type, term)
       @query = {}
       @query[type.to_sym] = term
-      print_json(@client.search(@query), options['format'])
+      @query[:limit] = options['record_limit']
+      @client.search(@query).each do |data|
+        print_json(data, options['format'])
+      end
     end
 
     desc 'types', 'List all Sonar query types'
@@ -52,6 +55,7 @@ module Sonar
       when 'pretty'
         ap(json)
       else
+        # TODO: use a faster JSON generator?
         puts(json.to_json)
       end
     end
