@@ -65,8 +65,10 @@ On the first run, sonar will setup a sonar.rc config file in your user folder.  
 email: YOUR_EMAIL
 access_token: SONAR_TOKEN
 api_url: https://sonar.labs.rapid7.com
+format: flat
+record_limit: 10000
 ```
-Replace YOUR_EMAIL with the email you used to register on the [Sonar website](https://sonar.labs.rapid7.com).  Replace SONAR_TOKEN with your API token found on the [Settings page](https://sonar.labs.rapid7.com/users/edit) of the Sonar website.  Enclosing quotes around these two credentials are not needed.
+Replace YOUR_EMAIL with the email you used to register on the [Sonar website](https://sonar.labs.rapid7.com).  Replace SONAR_TOKEN with your API token found on the [Settings page](https://sonar.labs.rapid7.com/users/edit) of the Sonar website.  The format option can either pretty-print the return JSON or display it in a flat output (by default).  The record limit is the maximum number of records to return for a query.  Responses are returned in 1000 record chunks that are streamed into the output to avoid API timeouts.  Enclosing quotes around these two settings are not needed.  These configurations can always be overwritten for a single command line query by specifying the option and argument: `--format pretty`.
 
 ## CLI usage
 
