@@ -20,6 +20,8 @@ tmp
 _yardoc
 doc/
 
+Gemfile.lock
+
 # Specific to RubyMotion
 .dat*
 .repl_history
