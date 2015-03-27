@@ -54,6 +54,10 @@ module Sonar
       case format
       when 'pretty'
         ap(json)
+      when 'lines'
+        if json.length > 1 && json[0] == 'collection'
+          json[1].each { |l| puts l.to_json }
+        end
       else
         # TODO: use a faster JSON generator?
         puts(json.to_json)
