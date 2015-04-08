@@ -34,6 +34,14 @@ module Sonar
       @query[:limit] = options['record_limit']
       @client.search(@query).each do |data|
         print_json(cleanup_data(data), options['format'])
+      resp = @client.search(@query)
+
+      if resp.is_a?(Sonar::Request::RequestIterator)
+        resp.each do |data|
+          print_json(data, options['format'])
+        end
+      else
+        print_json(resp, options['format'])
       end
     end
 
@@ -54,6 +62,12 @@ module Sonar
       case format
       when 'pretty'
         ap(json)
+      when 'lines'
+        if json.has_key?('collection')
+          json['collection'].each { |l| puts l.to_json }
+        else
+          puts 'Could not parse the response into lines.'
+        end
       else
         # TODO: use a faster JSON generator?
         puts(json.to_json)
