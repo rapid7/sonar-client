@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    sonar-client (0.0.2)
+    sonar-client (0.0.3)
       awesome_print
       faraday_middleware (~> 0.9.0)
       hashie (~> 2.0.3)
