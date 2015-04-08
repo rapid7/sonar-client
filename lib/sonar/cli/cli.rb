@@ -33,7 +33,7 @@ module Sonar
       @query[type.to_sym] = term
       @query[:limit] = options['record_limit']
       @client.search(@query).each do |data|
-        print_json(data, options['format'])
+        print_json(cleanup_data(data), options['format'])
       end
     end
 
@@ -58,6 +58,35 @@ module Sonar
         # TODO: use a faster JSON generator?
         puts(json.to_json)
       end
+    end
+
+    # Clean up whitespace and parse JSON values in responses
+    def cleanup_data(data)
+      ndata = {}
+      if data[0] != 'collection'
+        return data
+      end
+
+      ncoll = []
+
+      data[1].each do |item|
+        nitem = {}
+        item.each_pair do |k,v|
+
+          # Purge whitespace within values
+          nval = v.kind_of?(::String) ? v.strip : v
+          nkey = k.strip
+
+          # Parse JSON values
+          if nval && nval.index('{') == 0
+            nval = JSON.parse(nval) rescue nval
+          end
+
+          nitem[nkey] = nval
+        end
+        ncoll << nitem
+      end
+      [ data[0], ncoll ]
     end
 
     # Merge Thor options with those stored in sonar.rc file
