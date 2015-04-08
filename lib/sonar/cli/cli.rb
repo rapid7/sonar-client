@@ -32,16 +32,14 @@ module Sonar
       @query = {}
       @query[type.to_sym] = term
       @query[:limit] = options['record_limit']
-      @client.search(@query).each do |data|
-        print_json(cleanup_data(data), options['format'])
       resp = @client.search(@query)
 
       if resp.is_a?(Sonar::Request::RequestIterator)
         resp.each do |data|
-          print_json(data, options['format'])
+          print_json(cleanup_data(data), options['format'])
         end
       else
-        print_json(resp, options['format'])
+        print_json(cleanup_data(resp), options['format'])
       end
     end
 
@@ -76,31 +74,20 @@ module Sonar
 
     # Clean up whitespace and parse JSON values in responses
     def cleanup_data(data)
-      ndata = {}
-      if data[0] != 'collection'
-        return data
-      end
+      return data unless data.has_key?('collection')
 
-      ncoll = []
-
-      data[1].each do |item|
-        nitem = {}
+      data['collection'].each do |item|
         item.each_pair do |k,v|
-
           # Purge whitespace within values
-          nval = v.kind_of?(::String) ? v.strip : v
-          nkey = k.strip
+          v.kind_of?(::String) ? v.strip! : v
 
           # Parse JSON values
-          if nval && nval.index('{') == 0
-            nval = JSON.parse(nval) rescue nval
+          if v && v.index('{') == 0
+            v = JSON.parse(v) rescue v
           end
-
-          nitem[nkey] = nval
         end
-        ncoll << nitem
       end
-      [ data[0], ncoll ]
+      data
     end
 
     # Merge Thor options with those stored in sonar.rc file
