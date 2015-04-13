@@ -74,8 +74,7 @@ module Sonar
 
     # Clean up whitespace and parse JSON values in responses
     def cleanup_data(data)
-      return data unless data.has_key?('collection')
-
+      return data unless data.is_a?(Hash) && data.has_key?('collection')
       data['collection'].each do |item|
         item.each_pair do |k,v|
           # Purge whitespace within values

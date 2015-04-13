@@ -28,8 +28,6 @@ end
 RSpec.configure do |c|
   c.include APIMatchers::RSpecMatchers
 
-  c.treat_symbols_as_metadata_keys_with_true_values = true
-
   #
   # Add gem specific configuration for easy access
   #
@@ -48,6 +46,19 @@ RSpec.configure do |c|
       config.email            = ENV['SONAR_EMAIL']
     end
   end
+end
+
+def capture(stream)
+  begin
+    stream = stream.to_s
+    eval "$#{stream} = StringIO.new"
+    yield
+    result = eval("$#{stream}").string
+  ensure
+    eval("$#{stream} = #{stream.upcase}")
+  end
+
+  result
 end
 
 def fixtures_path
