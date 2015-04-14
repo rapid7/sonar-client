@@ -8,7 +8,7 @@ module Sonar
   class CLI < Thor
     class_option 'profile', aliases: '-P', type: :string, default: File.join(File.expand_path('~'), Sonar::RCFile::FILENAME),
                             desc: 'Path to Sonar RC file', banner: 'FILE'
-    class_option 'format', type: :string, desc: 'Flat JSON or pretty printed [flat/pretty]'
+    class_option 'format', type: :string, desc: 'Flat JSON, JSON lines, or pretty printed [flat/lines/pretty]'
 
     def initialize(*)
       @config = Sonar::RCFile.instance.load_file
