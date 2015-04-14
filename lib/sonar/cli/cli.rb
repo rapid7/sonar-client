@@ -86,7 +86,7 @@ module Sonar
               e = safe_parse_json(e)
             end
           else
-            v = safe_parse_json(v)
+            item[k] = safe_parse_json(v)
           end
         end
       end

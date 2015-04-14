@@ -37,6 +37,17 @@ describe Sonar::CLI do
         expect(JSON.parse(output)['collection'].first['details'].first['subject']['ST']).to eq('California')
       end
     end
+    context 'client that returns processed reply with nested json' do
+      before do
+        allow_any_instance_of(Sonar::Client).to receive(:search).and_return(
+          Sonar::Client.new.search(processed: '8.8.8.')
+        )
+      end
+      it 'parses the nested value as a string' do
+        output = run_command('search processed 8.8.8.')
+        expect(JSON.parse(output)['collection'].first['value']['ip']).to eq('8.8.8.8')
+      end
+    end
   end
 
   def run_command(args)
