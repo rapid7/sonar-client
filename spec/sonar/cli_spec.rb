@@ -10,21 +10,32 @@ describe Sonar::CLI do
       output = run_command('profile')
       expect(output).to match(/email@asdfasdfasfd.com/)
     end
-  end
-  context 'a client that returns an rdns resp' do
-    before do
-      Sonar::RCFile.instance.path = "#{fixtures_path}/sonar.rc"
-      allow_any_instance_of(Sonar::Client).to receive(:search).and_return(
-        { 'collection' => [{ 'address' => '192.168.1.1 ' }], 'more' => 'false' }
-      )
+
+    context 'client that returns an rdns resp' do
+      before do
+        allow_any_instance_of(Sonar::Client).to receive(:search).and_return(
+          { 'collection' => [{ 'address' => '192.168.1.1 ' }], 'more' => 'false' }
+        )
+      end
+      it 'strips whitespace from values' do
+        output = run_command('search rdns 8.8.8.8')
+        expect(output).to eq('{"collection":[{"address":"192.168.1.1"}],"more":"false"}')
+      end
+      it 'can return lines format' do
+        output = run_command('search --format lines rdns 8.8.8.8')
+        expect(output).to eq('{"address":"192.168.1.1"}')
+      end
     end
-    it 'strips whitespace from values' do
-      output = run_command('search rdns 8.8.8.8')
-      expect(output).to eq('{"collection":[{"address":"192.168.1.1"}],"more":"false"}')
-    end
-    it 'can return lines format' do
-      output = run_command('search --format lines rdns 8.8.8.8')
-      expect(output).to eq('{"address":"192.168.1.1"}')
+    context 'client that returns sslcert reply with nested json' do
+      before do
+        allow_any_instance_of(Sonar::Client).to receive(:search).and_return(
+          Sonar::Client.new.search(sslcert: '152a0a633aaf13f02c428ac1a3e672e895512bfd')
+        )
+      end
+      it 'parses the nested values in an array' do
+        output = run_command('search sslcert 152a0a633aaf13f02c428ac1a3e672e895512bfd')
+        expect(JSON.parse(output)['collection'].first['details'].first['subject']['ST']).to eq('California')
+      end
     end
   end
 

@@ -78,15 +78,23 @@ module Sonar
       data['collection'].each do |item|
         item.each_pair do |k,v|
           # Purge whitespace within values
-          v.kind_of?(::String) ? v.strip! : v
+          v.is_a?(::String) ? v.strip! : v
 
           # Parse JSON values
-          if v && v.index('{') == 0
-            v = JSON.parse(v) rescue v
+          if v.is_a?(Array)
+            v.map! do |e|
+              e = safe_parse_json(e)
+            end
+          else
+            v = safe_parse_json(v)
           end
         end
       end
       data
+    end
+
+    def safe_parse_json(s)
+      JSON.parse(s) rescue s
     end
 
     # Merge Thor options with those stored in sonar.rc file
