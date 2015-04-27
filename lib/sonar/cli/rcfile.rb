@@ -22,7 +22,11 @@ module Sonar
         f.puts 'format: flat'
         f.puts 'record_limit: 10000'
       end
+      warn = "Please set your email and API token in sonar.rc"
+      puts "=" * warn.size
       puts "Config file setup at: #{@path}"
+      puts warn
+      puts "=" * warn.size
     end
 
     def load_file

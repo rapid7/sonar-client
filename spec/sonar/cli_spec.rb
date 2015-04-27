@@ -2,6 +2,16 @@
 require 'spec_helper'
 
 describe Sonar::CLI do
+  context 'with an invalid stock sonar.rc profile' do
+    before do
+      Sonar::RCFile.instance.path = "#{fixtures_path}/sonar-stock.rc"
+    end
+    it 'warns user of missing config values when trying to search' do
+      output = run_command('search rdns 8.8.8.8')
+      expect(output).to match(/Could not authenticate/)
+    end
+  end
+
   context "with a valid profile" do
     before do
       Sonar::RCFile.instance.path = "#{fixtures_path}/sonar.rc"

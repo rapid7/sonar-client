@@ -56,19 +56,20 @@ module Sonar
 
     private
 
-    def print_json(json, format)
+    def print_json(data, format)
       case format
       when 'pretty'
-        ap(json)
+        ap(data)
       when 'lines'
-        if json.has_key?('collection')
-          json['collection'].each { |l| puts l.to_json }
+        if data.has_key?('collection')
+          data['collection'].each { |l| puts l.to_json }
         else
-          puts 'Could not parse the response into lines.'
+          puts 'WARNING: Could not parse the response into lines, there was no collection.'
+          puts data.to_json
         end
       else
         # TODO: use a faster JSON generator?
-        puts(json.to_json)
+        puts(data.to_json)
       end
     end
 

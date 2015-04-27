@@ -54,7 +54,7 @@ module Sonar
           params[:connection] = connection
           resp = get(url, params)
           params[:iterator_id] = resp.iterator_id
-          records_rcvd += resp['collection'].size
+          records_rcvd += resp['collection'].size rescue 0
           more = resp['more']
           yield resp
         end

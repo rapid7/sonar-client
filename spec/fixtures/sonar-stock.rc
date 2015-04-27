@@ -1,0 +1,3 @@
+email: YOUR_EMAIL
+access_token: SONAR_TOKEN
+api_url: https://sonar.labs.rapid7.com
