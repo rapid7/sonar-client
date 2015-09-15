@@ -53,9 +53,34 @@ describe Sonar::CLI do
           Sonar::Client.new.search(processed: '8.8.8.')
         )
       end
-      it 'parses the nested value as a string' do
+      xit 'parses the nested value as a string' do
         output = run_command('search processed 8.8.8.')
         expect(JSON.parse(output)['collection'].first['value']['ip']).to eq('8.8.8.8')
+      end
+    end
+    describe 'searching with #exact --exact option' do
+      context 'client that returns fdns for rapid7 IP exact' do
+        before do
+          allow_any_instance_of(Sonar::Client).to receive(:search).and_return(
+            Sonar::Client.new.search(fdns: '208.118.227.20', exact: true)
+          )
+        end
+        it 'matches exactly with --exact' do
+          output = run_command('search fdns 208.118.227.20 --exact')
+          expect(JSON.parse(output)['collection'].size).to eq(1)
+          expect(JSON.parse(output)['collection'].first['name']).to eq('208.118.227.20')
+        end
+      end
+      context 'client that returns fdns for rapid7 IP' do
+        before do
+          allow_any_instance_of(Sonar::Client).to receive(:search).and_return(
+            Sonar::Client.new.search(fdns: '208.118.227.20')
+          )
+        end
+        it 'matches exactly without --exact' do
+          output = run_command('search fdns 208.118.227.20')
+          expect(JSON.parse(output)['collection'].size).to be >  1
+        end
       end
     end
   end
