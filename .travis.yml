@@ -13,6 +13,6 @@ script: bundle exec rspec
 # travis encrypt SONAR_API_URL=https://sonar.labs.rapid7.com -r rapid7/sonar-client
 secure: "hEjrs5xTiPpcyuxSjhBhme69sZlMP90kdyrAiHb8uc0ZGuYJ2JDgw6uk+iX6AWRQyTVnGSPi6mfow6n5pTZgX+NTC+L3SziW3Gt3TRGMqLd6lA/KbS0t0rd8Htupn8Rin4Z0+0Z9qayfX0b9xFmwTFLsNVs1Ed4mspPh0q9CLuI="
 # travis encrypt SONAR_EMAIL=<your email> -r rapid7/sonar-client
-secure: "XXX"
+secure: "QafEWWOK4poi7SHkkdJy+NhxIyaQ3luE60ktfnu+LlbtVhiHGdFfwQcNQxeNOgN2vWkldI7La9o4tL6V2eKc0K6EeuJJFgt1HEf9dSghn+Yy1Szm0b5T3dEnJyaqAw4buAV9qZSgmYrZJ9zNiUH/Tbhfsbk552WkCxVysImxQi0="
 # travis encrypt SONAR_TOKEN=<your token> -r rapid7/sonar-client
-secure: "XXX"
+secure: "cpaV274XRA97fQwZCsJNIKSmjGZ/ccJkyz7bvKcjuI3sIQGyIwJBNgz6Yn9QlrVrFliiVoVSBkAaZaUJVE2a8t2CzgtxqOfpWhkyb63KEig35eFEHw1qeXDTlIiIZAIJ0k5v4hi/+KcvFmEJpIMKlrSCn/CjNmVRhkT0LTdRCI0="
