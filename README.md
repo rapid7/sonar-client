@@ -3,6 +3,9 @@ sonar-client
 
 Ruby API Wrapper and CLI for [Sonar](https://sonar.labs.rapid7.com)
 
+[![Gem Version](https://badge.fury.io/rb/sonar-client.svg)](http://badge.fury.io/rb/sonar-client)
+[![Build Status](https://travis-ci.org/rapid7/sonar-client.svg?branch=master)](https://travis-ci.org/rapid7/sonar-client)
+
 ## Installation
 
 Install the gem by running

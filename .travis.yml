@@ -1,0 +1,12 @@
+language: ruby
+sudo: false
+cache: bundler
+rvm:
+  - 2.1.5
+  - jruby
+before_install:
+  - "echo 'gem: --no-ri --no-rdoc' > ~/.gemrc"
+  - rake --version
+before_script:
+  - bundle exec rake --version
+script: bundle exec rspec
