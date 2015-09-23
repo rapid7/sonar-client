@@ -10,3 +10,9 @@ before_install:
 before_script:
   - bundle exec rake --version
 script: bundle exec rspec
+# travis encrypt SONAR_API_URL=https://sonar.labs.rapid7.com -r rapid7/sonar-client
+secure: "hEjrs5xTiPpcyuxSjhBhme69sZlMP90kdyrAiHb8uc0ZGuYJ2JDgw6uk+iX6AWRQyTVnGSPi6mfow6n5pTZgX+NTC+L3SziW3Gt3TRGMqLd6lA/KbS0t0rd8Htupn8Rin4Z0+0Z9qayfX0b9xFmwTFLsNVs1Ed4mspPh0q9CLuI="
+# travis encrypt SONAR_EMAIL=<your email> -r rapid7/sonar-client
+secure: "XXX"
+# travis encrypt SONAR_TOKEN=<your token> -r rapid7/sonar-client
+secure: "XXX"
