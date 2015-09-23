@@ -28,7 +28,7 @@ module Sonar
 
     desc 'search [QUERY TYPE] [QUERY TERM]', 'Search anything from Sonars'
     method_option 'record_limit', type: :numeric, aliases: '-n', desc: 'Maximum number of records to fetch'
-    method_option 'exact', type: :boolean, aliases: '-e', desc: 'Search for the query string exactly, do not including partial string matches'
+    method_option 'exact', type: :boolean, aliases: '-e', desc: 'Search for the query string exactly, do not include partial string matches'
 
     def search(type, term)
       @query = {}
