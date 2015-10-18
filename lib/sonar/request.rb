@@ -58,6 +58,7 @@ module Sonar
           more = resp['more']
           yield resp
         end
+        params.delete(:iterator_id)
       end
     end
   end
