@@ -50,6 +50,19 @@ And then execute:
     # => responds with a Hashie object
 ```
 
+## Running the specs
+
+Until they're mocked, specs are run against a live API, either production, staging, or localhost (development).  The config in `spec/spec_helper.rb` requires several credentials to be set as environment variables to make requests.  Consider adding this to your `~/.bashrc` or export the variables before running the specs:
+
+```
+# Sonar config
+export SONAR_TOKEN=asldkstokenalskdjf
+export SONAR_API_URL=http://sonar-staging.labs.rapid7.com/
+export SONAR_EMAIL=youremail@example.com
+```
+
+Once you have the variables set, `rspec spec` will run all the specs.
+
 ## CLI dev setup
 
 From the project root directory
