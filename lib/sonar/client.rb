@@ -22,10 +22,10 @@ module Sonar
     #
     # @params options[Hash]
     def initialize(options = {})
-      @api_url        = options[:api_url]       || Sonar.api_url       || "https://sonar.labs.rapid7.com"
-      @api_version    = options[:api_version]   || Sonar.api_version   || "v2"
-      @access_token   = options[:access_token]  || Sonar.access_token
-      @email          = options[:email]         || Sonar.email
+      @api_url        = options.fetch(:api_url, default_api_url)
+      @api_version    = options.fetch(:api_version, default_api_version )
+      @access_token   = options.fetch(:access_token, default_access_token)
+      @email          = options.fetch(:email, default_email)
     end
 
     ##
@@ -71,6 +71,52 @@ module Sonar
     end
 
     private
+
+    # Returns the default value for the api url
+    #
+    # @return [String] the URL for the Sonar API
+    def default_api_url
+      begin
+        Sonar.api_url
+      rescue NoMethodError
+        'https://sonar.labs.rapid7.com'
+      end
+    end
+
+    # Returns the default value for the api version
+    #
+    # @return [String] the Sonar API version to use
+    def default_api_version
+      begin
+        Sonar.api_version
+      rescue NoMethodError
+        'v2'
+      end
+    end
+
+    # Returns the default value for the access token
+    #
+    # @return [String] if {Sonar} has a value configured
+    # @return [nil]
+    def default_access_token
+      begin
+        Sonar.access_token
+      rescue NoMethodError
+        nil
+      end
+    end
+
+    # Returns the default value for the email address
+    #
+    # @return [String] if {Sonar} has a value configured
+    # @return [nil]
+    def default_email
+      begin
+        Sonar.email
+      rescue NoMethodError
+        nil
+      end
+    end
 
     def default_headers
       {
