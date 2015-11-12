@@ -29,8 +29,6 @@ module Sonar
         when :post, :put
           request.path = path
           request.body = MultiJson.encode(options) unless options.empty?
-            require 'pry'
-            binding.pry
         end
       end
 
