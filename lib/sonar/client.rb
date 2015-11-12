@@ -1,10 +1,13 @@
 # encoding: utf-8
+require 'faraday'
+require 'faraday_middleware'
 require 'forwardable'
 require 'sonar/request'
 require 'sonar/certificate'
 require 'sonar/search'
 require 'sonar/user'
 require 'sonar/cli/cli'
+require 'sonar/registration'
 
 module Sonar
   class Client
@@ -14,6 +17,7 @@ module Sonar
     include Certificate
     include Search
     include User
+    include Registration
 
     attr_accessor :api_url, :api_version, :access_token, :email
 
