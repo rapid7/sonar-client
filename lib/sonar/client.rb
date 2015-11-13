@@ -106,7 +106,7 @@ module Sonar
       begin
         Sonar.access_token
       rescue NoMethodError
-        nil
+        ''
       end
     end
 
@@ -118,7 +118,7 @@ module Sonar
       begin
         Sonar.email
       rescue NoMethodError
-        nil
+        ''
       end
     end
 
