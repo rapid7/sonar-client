@@ -7,15 +7,15 @@ describe Sonar::Registration do
   context 'POSTing a valid product key' do
     let (:resp) { client.register_metasploit("1e80c24b97c928bb1db7d4d3c05475a6a40a1186") }
 
-    it 'responds that the license is valid' do
+    xit 'responds that the license is valid' do
       expect(resp).to have_key('valid')
       expect(resp['valid']).to be(true)
     end
-    it 'responds with a user email' do
+    xit 'responds with a user email' do
       expect(resp).to have_key('email')
       expect(resp['email']).to match(/@/)
     end
-    it 'responds with an api_key' do
+    xit 'responds with an api_key' do
       expect(resp).to have_key('api_key')
       expect(resp['api_key']).to match(/KEY/)
     end
@@ -24,7 +24,7 @@ describe Sonar::Registration do
   context 'POSTing an invalid product key' do
     let (:resp) { client.register_metasploit("DDXXXX") }
 
-    it 'responds that the license is invalid' do
+    xit 'responds that the license is invalid' do
       expect(resp).to have_key('valid')
       expect(resp['valid']).to be(false)
     end
