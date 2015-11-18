@@ -67,8 +67,8 @@ describe Sonar::CLI do
         end
         it 'matches exactly with --exact' do
           output = run_command('search fdns 208.118.227.20 --exact')
-          expect(JSON.parse(output)['collection'].size).to eq(1)
-          expect(JSON.parse(output)['collection'].first['name']).to eq('208.118.227.20')
+          expect(JSON.parse(output)['collection'].size).to be >= 1
+          expect(JSON.parse(output)['collection'].any? { |c| c['name'] == '208.118.227.20' }).to be(true)
         end
       end
       context 'client that returns fdns for rapid7 IP' do

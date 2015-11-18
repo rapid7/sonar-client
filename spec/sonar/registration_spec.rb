@@ -20,4 +20,13 @@ describe Sonar::Registration do
       expect(resp['api_key']).to match(/KEY/)
     end
   end
+
+  context 'POSTing an invalid product key' do
+    let (:resp) { client.register_metasploit("DDXXXX") }
+
+    it 'responds that the license is invalid' do
+      expect(resp).to have_key('valid')
+      expect(resp['valid']).to be(false)
+    end
+  end
 end

@@ -66,6 +66,6 @@ def fixtures_path
 end
 
 def reset_sonar_config
-  Sonar.api_version = nil
-  Sonar.api_url = nil
+  Sonar.remove_class_variable(:@@api_url) if Sonar.class_variable_defined?(:@@api_url)
+  Sonar.remove_class_variable(:@@api_version) if Sonar.class_variable_defined?(:@@api_version)
 end
