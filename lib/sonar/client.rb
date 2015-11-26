@@ -92,7 +92,7 @@ module Sonar
     # @return [String] the Sonar API version to use
     def default_api_version
       begin
-        Sonar.api_version
+        Sonar.api_version || 'v2'
       rescue NoMethodError
         'v2'
       end
