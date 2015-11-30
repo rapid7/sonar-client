@@ -54,8 +54,8 @@ describe Sonar, skip_autoconfig: true do
         c.email = "wrong@sowrong.com"
         c.access_token = "somewrongkey"
         c.api_version = "v2"
-        c.api_url = "https://sonar-staging.labs.rapid7.com"
       end
+      puts Sonar.api_url
       client = Sonar::Client.new
       @resp = client.search(rdns: "hp.com")
     end
