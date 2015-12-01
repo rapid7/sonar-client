@@ -1,0 +1,103 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://sonar.labs.rapid7.com/api/v2/metasploit_verify
+    body:
+      encoding: UTF-8
+      string: '{"product_key":"SOME-VALID-KEY"}'
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Sonar 0.0.8 Ruby Gem
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 19 Nov 2015 04:53:25 GMT
+      Server:
+      - Apache
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Runtime:
+      - '3.898589'
+      X-Powered-By:
+      - Phusion Passenger 4.0.53
+      Set-Cookie:
+      - request_method=POST; path=/
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"valid":true,"api_key":"YOUR-VALID-API-KEY","email":"metasploit-sdafsaefaef@rapid7.com"}'
+    http_version:
+  recorded_at: Thu, 19 Nov 2015 04:54:20 GMT
+- request:
+    method: post
+    uri: https://sonar.labs.rapid7.com/api/v2/metasploit_verify
+    body:
+      encoding: UTF-8
+      string: '{"product_key":"SOME-VALID-KEY"}'
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Sonar 0.0.8 Ruby Gem
+      X-Sonar-Token:
+      - 6e28da9c72c1e2cecd2ac8ae890853fa72d26d55
+      X-Sonar-Email:
+      - marklinstop@gmail.com
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 23 Nov 2015 02:48:56 GMT
+      Server:
+      - Apache
+      Status:
+      - 404 Not Found
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - sameorigin
+      X-Powered-By:
+      - Phusion Passenger 5.0.16
+      X-Request-Id:
+      - c5151aa7-f5d9-42d3-963e-6ce32a968921
+      X-Runtime:
+      - '0.003344'
+      Content-Length:
+      - '36'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"status":"404","error":"Not Found"}'
+    http_version:
+  recorded_at: Mon, 23 Nov 2015 02:49:51 GMT
+recorded_with: VCR 2.8.0
