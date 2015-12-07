@@ -28,11 +28,11 @@ describe Sonar::Registration do
   context 'POSTing an invalid product key' do
     let (:resp) { client.register_metasploit("DDXXXX") }
 
-    xit 'responds that the license is invalid' do
+    it 'responds that the license is invalid' do
       expect(resp).to have_key('valid')
       expect(resp['valid']).to be(false)
     end
-    xit 'responds with an error message' do
+    it 'responds with an error message' do
       expect(resp).to have_key('error')
       expect(resp['error']).to match(/not appear to be valid/)
     end
