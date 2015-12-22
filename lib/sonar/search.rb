@@ -8,6 +8,7 @@ module Sonar
       'certips'     => 'Certificate to IPs',
       'rdns'        => 'IP to Reverse DNS Lookup or DNS Lookup to IP',
       'fdns'        => 'Domains to IP or IPs to Domain',
+      'host_ports'  => 'Ports for all IPs for a host',
       'ipcerts'     => 'IP to Certificates',
       'namecerts'   => 'Domain to Certificates',
       'links_to'    => 'HTTP References to Domain',

@@ -112,6 +112,37 @@ describe Sonar::Search do
     end
   end
 
+  context "host_ports" do
+    let(:resp) { client.search(host_ports: 'exchange.mobilisafe.com') }
+
+    it "provides host_ports information" do
+      expect(resp).to have_key('collection')
+      expect(resp['collection']).to include(
+        {
+          "address"=>"50.78.165.229",
+          "name"=>"exchange.mobilisafe.com",
+          "sources"=>
+            [
+              "20150926",
+              "20151003",
+              "20151010",
+              "20151017",
+              "20151024",
+              "20151031",
+              "20151107",
+              "20151114",
+              "20151121",
+              "20151128",
+              "20151205",
+              "20151212",
+              "20151219"
+            ],
+          "ports"=>["port-443/tcp"]
+        }
+      )
+    end
+  end
+
   context "links_to" do
     let(:resp) { client.search(links_to: 'rapid7.com') }
 
