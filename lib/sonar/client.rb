@@ -38,15 +38,29 @@ module Sonar
     # @return [Faraday::Connection]
     def connection
       params = {}
-      @conn = Faraday.new(url: api_url, params: params, headers: default_headers, ssl: { verify: true }) do |faraday|
-        faraday.use FaradayMiddleware::Mashify
-        faraday.use FaradayMiddleware::ParseJson, content_type: /\bjson$/
-        faraday.use FaradayMiddleware::FollowRedirects
-        faraday.adapter Faraday.default_adapter
+      @conn = Faraday.new(url: api_url, params: params, headers: default_headers, ssl: { verify: true }) do |builder|
+        builder.use FaradayMiddleware::Mashify
+        builder.use FaradayMiddleware::ParseJson, content_type: /\bjson$/
+        builder.use FaradayMiddleware::FollowRedirects
+        builder.adapter Faraday.default_adapter
       end
       @conn.headers['X-Sonar-Token'] = access_token
       @conn.headers['X-Sonar-Email'] = email
       @conn
+    end
+
+    # Connect to sonar using basic authentication
+    # @param user [String]
+    # @param pass [String]
+    # @return [Faraday::Connection]
+    def basic_authenticated_connection(user, pass)
+      Faraday.new(url: api_url, headers: default_headers, ssl: { verify: true }) do |builder|
+        builder.use FaradayMiddleware::Mashify
+        builder.use FaradayMiddleware::ParseJson, content_type: /\bjson$/
+        builder.use FaradayMiddleware::FollowRedirects
+        builder.use Faraday::Request::BasicAuthentication, user, pass
+        builder.adapter Faraday.default_adapter
+      end
     end
 
     ##

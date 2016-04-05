@@ -47,7 +47,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"valid":true,"api_key":"YOUR-VALID-API-KEY","email":"metasploit-sdafsaefaef@rapid7.com"}'
-    http_version:
+    http_version: 
   recorded_at: Thu, 19 Nov 2015 04:54:20 GMT
 - request:
     method: post
@@ -98,6 +98,162 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"status":"404","error":"Not Found"}'
-    http_version:
+    http_version: 
   recorded_at: Mon, 23 Nov 2015 02:49:51 GMT
+- request:
+    method: post
+    uri: http://sonar.labs.rapid7.com/api/v2/metasploit_verify
+    body:
+      encoding: UTF-8
+      string: '{"product_key":"SOME-VALID-KEY"}'
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Sonar 0.1.1 Ruby Gem
+      X-Sonar-Token:
+      - asldkstokenalskdjf
+      X-Sonar-Email:
+      - youremail@example.com
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Tue, 05 Apr 2016 12:01:53 GMT
+      Etag:
+      - '"7cd3c970736cfb3cbad8b2d4975eb415"'
+      Server:
+      - Apache
+      Set-Cookie:
+      - request_method=POST; path=/
+      Status:
+      - 200 OK
+      X-Content-Type-Options:
+      - nosniff
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      - sameorigin
+      X-Powered-By:
+      - Phusion Passenger 5.0.16
+      X-Request-Id:
+      - 78ac0771-3b3c-4fab-a787-286b97cc1b83
+      X-Runtime:
+      - '0.429617'
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Length:
+      - '69'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"error":"The product_key does not appear to be valid","valid":false}'
+    http_version: 
+  recorded_at: Tue, 05 Apr 2016 12:01:54 GMT
+- request:
+    method: post
+    uri: http://sonarqube.dev.azk.io/api/v2/metasploit_verify
+    body:
+      encoding: UTF-8
+      string: '{"product_key":"SOME-VALID-KEY"}'
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Sonar 0.1.1 Ruby Gem
+      X-Sonar-Token:
+      - 5830fd33aaaaafc7fc5c5e45fe41e8a0fb760bce
+      X-Sonar-Email:
+      - admin
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Server:
+      - Apache-Coyote/1.1
+      Cache-Control:
+      - no-cache
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Type:
+      - text/html;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      Date:
+      - Tue, 05 Apr 2016 12:02:52 GMT
+      Connection:
+      - close
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+            "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+        <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+        <head>
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+          <title>SonarQube (404)</title>
+          <style type="text/css">
+            body {
+              background-color: #fff;
+              color: #666;
+              text-align: center;
+              font-family: arial, sans-serif;
+            }
+
+            div.dialog {
+              width: 25em;
+              padding: 0 4em;
+              margin: 4em auto 0 auto;
+              border: 1px solid #ccc;
+              border-right-color: #999;
+              border-bottom-color: #999;
+            }
+
+            h1 {
+              font-size: 100%;
+              color: #f00;
+              line-height: 1.5em;
+            }
+          </style>
+        </head>
+
+        <body>
+        <!-- This file lives in public/404.html -->
+        <div class="dialog">
+          <h1>The page you were looking for doesn't exist.</h1>
+
+          <p>You may have mistyped the address or the page may have moved.</p>
+
+          <p>
+            <a href="/">Go back to the homepage</a>
+          </p>
+        </div>
+        </body>
+        </html>
+    http_version: 
+  recorded_at: Tue, 05 Apr 2016 12:02:53 GMT
 recorded_with: VCR 2.8.0
