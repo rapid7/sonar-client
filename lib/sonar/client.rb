@@ -6,20 +6,26 @@ require 'sonar/request'
 require 'sonar/certificate'
 require 'sonar/search'
 require 'sonar/user'
+require 'sonar/user_group'
+require 'sonar/project'
 require 'sonar/cli/cli'
 require 'sonar/registration'
 
 module Sonar
   class Client
+    class ConnectionFailed < StandardError; end
+
     extend Forwardable
 
     include Request
     include Certificate
     include Search
     include User
+    include UserGroup
+    include Project
     include Registration
 
-    attr_accessor :api_url, :api_version, :access_token, :email
+    attr_accessor :api_url, :api_version, :access_token, :email, :pass
 
     ##
     # Create a new Sonar::Client object
@@ -30,13 +36,37 @@ module Sonar
       @api_version    = options.fetch(:api_version, default_api_version )
       @access_token   = options.fetch(:access_token, default_access_token)
       @email          = options.fetch(:email, default_email)
+      @pass           = options.fetch(:pass, default_email)
+    end
+
+    ##
+    # Create a Faraday::Connection object
+    # @params options [Hash] :connection_type, :basic_auth
+    # @return [Faraday::Connection]
+    def connection(options)
+      connection_type = options[:connection_type] || :token
+
+      options.delete :connection_type
+
+      case connection_type
+      when :token then token_connection
+      when :basic_authenticated
+        user = options[:basic_auth][:user]
+        pass = options[:basic_auth][:pass]
+
+        options.delete :basic_auth
+
+        basic_authenticated_connection(user, pass)
+      else
+        fail ConnectionFailed, "unexpected connection type '#{connection_type}' provided"
+      end
     end
 
     ##
     # Create a Faraday::Connection object
     #
     # @return [Faraday::Connection]
-    def connection
+    def token_connection
       params = {}
       @conn = Faraday.new(url: api_url, params: params, headers: default_headers, ssl: { verify: true }) do |builder|
         builder.use FaradayMiddleware::Mashify

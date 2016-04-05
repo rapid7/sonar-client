@@ -21,7 +21,8 @@ module Sonar
     end
 
     def request(method, path, options)
-      generic_request(method, path, options, conn: connection)
+      conn = connection(options)
+      generic_request(method, path, options, conn: conn)
     end
 
     # Generic request dependent of conn param
