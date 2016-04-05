@@ -25,7 +25,7 @@ module Sonar
     include Project
     include Registration
 
-    attr_accessor :api_url, :api_version, :access_token, :email, :pass
+    attr_accessor :api_url, :api_version, :access_token, :email, :pass, :debug
 
     ##
     # Create a new Sonar::Client object
@@ -37,6 +37,7 @@ module Sonar
       @access_token   = options.fetch(:access_token, default_access_token)
       @email          = options.fetch(:email, default_email)
       @pass           = options.fetch(:pass, default_email)
+      @debug          = options.fetch(:debug, default_email)
     end
 
     ##
@@ -72,6 +73,7 @@ module Sonar
         builder.use FaradayMiddleware::Mashify
         builder.use FaradayMiddleware::ParseJson, content_type: /\bjson$/
         builder.use FaradayMiddleware::FollowRedirects
+        builder.use Faraday::Response::Logger if @debug
         builder.adapter Faraday.default_adapter
       end
       @conn.headers['X-Sonar-Token'] = access_token
@@ -89,6 +91,7 @@ module Sonar
         builder.use FaradayMiddleware::ParseJson, content_type: /\bjson$/
         builder.use FaradayMiddleware::FollowRedirects
         builder.use Faraday::Request::BasicAuthentication, user, pass
+        builder.use Faraday::Response::Logger if @debug
         builder.adapter Faraday.default_adapter
       end
     end
@@ -171,6 +174,16 @@ module Sonar
         accept: 'application/json',
         content_type: 'application/json',
         user_agent: "Sonar #{Sonar::VERSION} Ruby Gem"
+      }
+    end
+
+    def basic_authenticated_options
+      {
+        connection_type: :basic_authenticated,
+        basic_auth: {
+          user: @email,
+          pass: @pass
+        }
       }
     end
   end

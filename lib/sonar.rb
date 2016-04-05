@@ -7,7 +7,7 @@ require "sonar/registration"
 
 module Sonar
   class << self
-    attr_accessor :api_url, :api_version, :access_token, :email
+    attr_accessor :api_url, :api_version, :access_token, :email, :pass, :debug
 
     ##
     # Configure default
@@ -24,6 +24,7 @@ module Sonar
     def load_defaults
       self.api_url ||= "https://sonar.labs.rapid7.com"
       self.api_version ||= "v2"
+      self.debug ||= false
     end
   end
 end
