@@ -11,6 +11,7 @@ module Sonar
 
     CREATE_ENDPOINT = "/api/user_groups/create"
     DELETE_ENDPOINT = "/api/user_groups/delete"
+    UPDATE_ENDPOINT = "/api/user_groups/update"
     RM_PERMISSION_ENDPOINT = "/api/permissions/remove_group"
     ADD_PERMISSION_ENDPOINT = "/api/permissions/add_group"
 
@@ -19,7 +20,7 @@ module Sonar
     ##
     # Create group
     # @param name [String] Name of group
-    # @param description [String] optional
+    # @param description [String] (optional)
     # @return [Hashie::Mash] with attribute group -> <Hashie::Mash id="00" membersCount=0 name="name">
     def create_usergroup(name:, description: nil)
       fail ReservedGroupName, name if RESERVED_NAMES.include? name
@@ -36,7 +37,7 @@ module Sonar
     # `id` or `name` must be provided
     # @param id [String] group id (optional)
     # @param name [String] Name of group (optional)
-    # @return [Hashie::Mash] with attribute group -> <Hashie::Mash id="00" membersCount=0 name="name">
+    # @return [String] ""
     def delete_usergroup(id: nil, name: nil)
       fail Sonar::InvalidParameters, "parameter `id` or `name` must be provided" if id.nil? & name.nil?
 
@@ -45,6 +46,23 @@ module Sonar
       options[:name] = name unless name.nil?
 
       post(DELETE_ENDPOINT, options)
+    end
+
+    ##
+    # Update group
+    # @param id [String] group id
+    # @param name [String] Name of group (optional)
+    # @param description [String] (optional)
+    # @return [Hashie::Mash] with attribute group -> <Hashie::Mash id="00" membersCount=0 name="newname">
+    def update_usergroup(id:, name: nil, description: nil)
+      fail ReservedGroupName, name if RESERVED_NAMES.include? name
+
+      options = basic_authenticated_options
+      options[:id] = id
+      options[:name] = name unless name.nil?
+      options[:description] = description unless description.nil?
+
+      post(UPDATE_ENDPOINT, options)
     end
 
     ##
