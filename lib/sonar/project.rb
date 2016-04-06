@@ -2,22 +2,37 @@
 
 module Sonar
   module Project
-    CREATE_PROJECT_ENDPOINT = "/api/projects/create"
+    CREATE_ENDPOINT = "/api/projects/create"
 
-    # Validates user and pass authentication
+    DELETE_ENDPOINT = "/api/projects/delete"
+    # Create project
     # @param name [String] Name of project
     # @param key [String] Key of project
     # @param branch [String] optional
     # @param format [String] default: json | xml
     # @return [Hashie::Mash] with methods `valid` and `valid?`
     def create_project(name:, key:, branch: nil, format: "json")
-      params = {}
-      params[:name] = name
-      params[:key] = key
-      params[:format] = format
-      params[:branch] = branch unless branch.nil?
+      options = {}
+      options[:name] = name
+      options[:key] = key
+      options[:format] = format
+      options[:branch] = branch unless branch.nil?
 
-      post(CREATE_PROJECT_ENDPOINT, params)
+      post(CREATE_ENDPOINT, options)
+    end
+
+    # Delete project
+    # @param id [String] project id
+    # @param key [String] project key
+    # @return [String] ""
+    def delete_project(id: nil, key: nil)
+      fail Sonar::InvalidParameters, "parameter `id` or `key` must be provided" if id.nil? & key.nil?
+
+      options = basic_authenticated_options
+      options[:id] = id unless id.nil?
+      options[:key] = key unless key.nil?
+
+      post(DELETE_ENDPOINT, options)
     end
   end
 end
