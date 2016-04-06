@@ -6,6 +6,8 @@ require "sonar/version"
 require "sonar/registration"
 
 module Sonar
+  class InvalidParameters < StandardError; end
+  
   class << self
     attr_accessor :api_url, :api_version, :access_token, :email, :pass, :debug
 

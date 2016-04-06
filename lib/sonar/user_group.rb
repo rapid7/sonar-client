@@ -9,9 +9,10 @@ module Sonar
       end
     end
 
-    CREATE_USERGROUP_ENDPOINT = "/api/user_groups/create"
-    RM_USERGROUP_PERMISSION_ENDPOINT = "/api/permissions/remove_group"
-    ADD_USERGROUP_PERMISSION_ENDPOINT = "/api/permissions/add_group"
+    CREATE_ENDPOINT = "/api/user_groups/create"
+    DELETE_ENDPOINT = "/api/user_groups/delete"
+    RM_PERMISSION_ENDPOINT = "/api/permissions/remove_group"
+    ADD_PERMISSION_ENDPOINT = "/api/permissions/add_group"
 
     RESERVED_NAMES = %w(anyone)
 
@@ -27,7 +28,23 @@ module Sonar
       options[:name] = name
       options[:description] = description unless description.nil?
 
-      post(CREATE_USERGROUP_ENDPOINT, options)
+      post(CREATE_ENDPOINT, options)
+    end
+
+    ##
+    # Delete group
+    # `id` or `name` must be provided
+    # @param id [String] group id (optional)
+    # @param name [String] Name of group (optional)
+    # @return [Hashie::Mash] with attribute group -> <Hashie::Mash id="00" membersCount=0 name="name">
+    def delete_usergroup(id: nil, name: nil)
+      fail Sonar::InvalidParameters, "parameter `id` or `name` must be provided" if id.nil? & name.nil?
+
+      options = basic_authenticated_options
+      options[:id] = id unless id.nil?
+      options[:name] = name unless name.nil?
+
+      post(DELETE_ENDPOINT, options)
     end
 
     ##
@@ -62,7 +79,7 @@ module Sonar
       options[:projectKey] = project_key unless project_key.nil?
       options[:projectId]  = project_id  unless project_id.nil?
 
-      post(RM_USERGROUP_PERMISSION_ENDPOINT, options)
+      post(RM_PERMISSION_ENDPOINT, options)
     end
 
     ##
@@ -97,7 +114,7 @@ module Sonar
       options[:projectKey] = project_key unless project_key.nil?
       options[:projectId]  = project_id  unless project_id.nil?
 
-      post(ADD_USERGROUP_PERMISSION_ENDPOINT, options)
+      post(ADD_PERMISSION_ENDPOINT, options)
     end
   end
 end
