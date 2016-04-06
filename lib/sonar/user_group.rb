@@ -12,6 +12,7 @@ module Sonar
     CREATE_ENDPOINT = "/api/user_groups/create"
     DELETE_ENDPOINT = "/api/user_groups/delete"
     UPDATE_ENDPOINT = "/api/user_groups/update"
+    ADD_USER_ENDPOINT = "/api/user_groups/add_user"
     RM_PERMISSION_ENDPOINT = "/api/permissions/remove_group"
     ADD_PERMISSION_ENDPOINT = "/api/permissions/add_group"
 
@@ -63,6 +64,23 @@ module Sonar
       options[:description] = description unless description.nil?
 
       post(UPDATE_ENDPOINT, options)
+    end
+
+    ##
+    # Add user to group
+    # @param group_id [String] group id(optional)
+    # @param group_name [String] group name (optional)
+    # @param user_login [String] user login (optional)
+    # @return [Hashie::Mash] with attribute group -> <Hashie::Mash id="00" membersCount=0 name="newname">
+    def add_user_to_group(group_id: nil, group_name: nil, user_login: nil)
+      fail Sonar::InvalidParameters, "parameter `group_id` or `group_name` must be provided" if group_id.nil? & group_name.nil?
+
+      options = basic_authenticated_options
+      options[:id] = group_id unless group_id.nil?
+      options[:name] = group_name unless group_name.nil?
+      options[:login] = user_login unless user_login.nil?
+
+      post(ADD_USER_ENDPOINT, options)
     end
 
     ##
