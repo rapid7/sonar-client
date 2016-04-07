@@ -35,13 +35,18 @@ module Sonar
       @query[:exact] = options['exact']
       resp = @client.search(@query)
 
+      errors = 0
       if resp.is_a?(Sonar::Request::RequestIterator)
         resp.each do |data|
+          errors += 1 if data.key?('errors') || data.key?('error')
           print_json(cleanup_data(data), options['format'])
         end
       else
+        errors += 1 if resp.key?('errors') || resp.key?('error')
         print_json(cleanup_data(resp), options['format'])
       end
+
+      return errors
     end
 
     desc 'types', 'List all Sonar query types'
