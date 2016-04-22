@@ -6,13 +6,8 @@ describe Sonar::CLI do
     before do
       Sonar::RCFile.instance.path = "#{fixtures_path}/sonar-stock.rc"
     end
-    it 'warns user of missing config values when trying to search' do
-      output, _ =  run_command('search rdns 8.8.8.8')
-      expect(output).to match(/Could not authenticate/)
-    end
-    it 'exits non-zero when errors are encountered' do
-      _, ret = run_command('search rdns 8.8.8.8')
-      expect(ret).to eq(1)
+    it 'throws an exception because of errors' do
+      expect { run_command('search rdns 8.8.8.8') }.to raise_error(Sonar::Search::SearchError)
     end
   end
 
@@ -21,7 +16,7 @@ describe Sonar::CLI do
       Sonar::RCFile.instance.path = "#{fixtures_path}/sonar.rc"
     end
     it "should return the profile" do
-      output, _ =  run_command('profile')
+      output =  run_command('profile')
       expect(output).to match(/email@asdfasdfasfd.com/)
     end
 
@@ -32,11 +27,11 @@ describe Sonar::CLI do
         )
       end
       it 'strips whitespace from values' do
-        output, _ =  run_command('search rdns 8.8.8.8')
+        output =  run_command('search rdns 8.8.8.8')
         expect(output).to eq('{"collection":[{"address":"192.168.1.1"}],"more":"false"}')
       end
       it 'can return lines format' do
-        output, _ =  run_command('search --format lines rdns 8.8.8.8')
+        output =  run_command('search --format lines rdns 8.8.8.8')
         expect(output).to eq('{"address":"192.168.1.1"}')
       end
     end
@@ -47,7 +42,7 @@ describe Sonar::CLI do
         )
       end
       it 'parses the nested values in an array' do
-        output, _ =  run_command('search sslcert 152a0a633aaf13f02c428ac1a3e672e895512bfd')
+        output =  run_command('search sslcert 152a0a633aaf13f02c428ac1a3e672e895512bfd')
         expect(JSON.parse(output)['collection'].first['details'].first['subject']['ST']).to eq('California')
       end
     end
@@ -58,7 +53,7 @@ describe Sonar::CLI do
         )
       end
       xit 'parses the nested value as a string' do
-        output, _ =  run_command('search processed 8.8.8.')
+        output =  run_command('search processed 8.8.8.')
         expect(JSON.parse(output)['collection'].first['value']['ip']).to eq('8.8.8.8')
       end
     end
@@ -70,7 +65,7 @@ describe Sonar::CLI do
           )
         end
         it 'matches exactly with --exact' do
-          output, _ =  run_command('search fdns 208.118.227.20 --exact')
+          output =  run_command('search fdns 208.118.227.20 --exact')
           expect(JSON.parse(output)['collection'].size).to be >= 1
           expect(JSON.parse(output)['collection'].any? { |c| c['name'] == '208.118.227.20' }).to be(true)
         end
@@ -82,7 +77,7 @@ describe Sonar::CLI do
           )
         end
         it 'matches exactly without --exact' do
-          output, _ =  run_command('search fdns 208.118.227.20')
+          output =  run_command('search fdns 208.118.227.20')
           expect(JSON.parse(output)['collection'].size).to be >  1
         end
       end
@@ -90,8 +85,6 @@ describe Sonar::CLI do
   end
 
   def run_command(args)
-    ret = 0
-    output, _ =  capture(:stdout) { ret = Sonar::CLI.start(args.split) }.strip
-    [output, ret]
+    capture(:stdout) { ret = Sonar::CLI.start(args.split) }.strip
   end
 end

@@ -19,6 +19,12 @@ module Sonar
     }
 
     ##
+    # Generic exception for errors encountered while searching
+    ##
+    class SearchError < StandardError
+    end
+
+    ##
     # Get search
     #
     # params take in search type as key and query as value

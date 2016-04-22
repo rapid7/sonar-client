@@ -46,7 +46,7 @@ module Sonar
         print_json(cleanup_data(resp), options['format'])
       end
 
-      return errors
+      raise Search::SearchError.new("Encountered #{errors} errors while searching") if errors > 0
     end
 
     desc 'types', 'List all Sonar query types'
