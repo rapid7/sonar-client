@@ -5,7 +5,9 @@ require 'bundler/setup'
 require 'sonar'
 
 begin
-  exit(Sonar::CLI.start(ARGV))
+  Sonar::CLI.start(ARGV)
+rescue Sonar::Search::SearchError => e
+  exit 1
 rescue Interrupt
   puts 'Quitting...'
 end
