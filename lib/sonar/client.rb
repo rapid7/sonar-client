@@ -25,7 +25,7 @@ module Sonar
     include Project
     include Registration
 
-    attr_accessor :api_url, :api_version, :access_token, :email, :pass, :debug
+    attr_accessor :api_url, :api_version, :access_token, :email, :pass, :debug, :ssl_verify
 
     ##
     # Create a new Sonar::Client object
@@ -38,6 +38,7 @@ module Sonar
       @email          = options.fetch(:email, default_email)
       @pass           = options.fetch(:pass, default_email)
       @debug          = options.fetch(:debug, default_email)
+      @ssl_verify     = options.fetch(:ssl_verify, default_ssl_verify)
     end
 
     ##
@@ -69,7 +70,7 @@ module Sonar
     # @return [Faraday::Connection]
     def token_connection
       params = {}
-      @conn = Faraday.new(url: api_url, params: params, headers: default_headers, ssl: { verify: true }) do |builder|
+      @conn = Faraday.new(url: api_url, params: params, headers: default_headers, ssl: { verify: @ssl_verify }) do |builder|
         builder.use FaradayMiddleware::Mashify
         builder.use FaradayMiddleware::ParseJson, content_type: /\bjson$/
         builder.use FaradayMiddleware::FollowRedirects
@@ -86,7 +87,7 @@ module Sonar
     # @param pass [String]
     # @return [Faraday::Connection]
     def basic_authenticated_connection(user, pass)
-      Faraday.new(url: api_url, headers: default_headers, ssl: { verify: true }) do |builder|
+      Faraday.new(url: api_url, headers: default_headers, ssl: { verify: @ssl_verify }) do |builder|
         builder.use FaradayMiddleware::Mashify
         builder.use FaradayMiddleware::ParseJson, content_type: /\bjson$/
         builder.use FaradayMiddleware::FollowRedirects
@@ -164,6 +165,14 @@ module Sonar
     def default_email
       begin
         Sonar.email
+      rescue NoMethodError
+        ''
+      end
+    end
+
+    def default_ssl_verify
+      begin
+        Sonar.ssl_verify
       rescue NoMethodError
         ''
       end

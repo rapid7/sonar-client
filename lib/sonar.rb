@@ -7,9 +7,9 @@ require "sonar/registration"
 
 module Sonar
   class InvalidParameters < StandardError; end
-  
+
   class << self
-    attr_accessor :api_url, :api_version, :access_token, :email, :pass, :debug
+    attr_accessor :api_url, :api_version, :access_token, :email, :pass, :debug, :ssl_verify
 
     ##
     # Configure default
@@ -27,6 +27,7 @@ module Sonar
       self.api_url ||= "https://sonar.labs.rapid7.com"
       self.api_version ||= "v2"
       self.debug ||= false
+      self.ssl_verify = true if !self.ssl_verify || !self.ssl_verify.is_a?(FalseClass)
     end
   end
 end
