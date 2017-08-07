@@ -2,6 +2,7 @@
 
 require 'thor'
 require 'sonar/cli/rcfile'
+require 'sonar/search'
 require 'awesome_print'
 
 module Sonar
@@ -24,10 +25,16 @@ module Sonar
       ap @client.usage
     end
 
+    desc 'search_all [QUERY TERM]', 'Search all Sonar record types'
+    def search_all(term)
+      Sonar::Search::QUERY_TYPES_MAP.keys.each do |type|
+        search(type, term) rescue 'Search failed'
+      end
+    end
+
     desc 'search [QUERY TYPE] [QUERY TERM]', 'Search anything from Sonars'
     method_option 'record_limit', type: :numeric, aliases: '-n', desc: 'Maximum number of records to fetch'
     method_option 'exact', type: :boolean, aliases: '-e', desc: 'Search for the query string exactly, do not include partial string matches'
-
     def search(type, term)
       @query = {}
       @query[type.to_sym] = term
