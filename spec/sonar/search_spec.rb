@@ -15,12 +15,12 @@ describe Sonar::Search do
 
     describe "exact" do
       it "shouldn't match anything when #exact is true" do
-        resp = client.search(rdns: "1.1.", exact: true)
+        resp = client.search(fdns: ".rapid7.com", exact: true)
         expect(resp["collection"].size).to eq(0)
       end
       it "should match when #exact is false" do
-        resp = client.search(rdns: "1.1.", exact: false)
-        expect(resp["collection"].first["address"]).to match(/^1.1./)
+        resp = client.search(fdns: ".rapid7.com", exact: false)
+        expect(resp["collection"].size).to be > 0 
       end
     end
 
