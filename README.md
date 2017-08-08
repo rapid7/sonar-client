@@ -60,7 +60,7 @@ Until they're mocked, specs are run against a live API, either production, stagi
 ```
 # Sonar config
 export SONAR_TOKEN=asldkstokenalskdjf
-export SONAR_API_URL=http://sonar.labs.rapid7.com/
+export SONAR_API_URL=https://sonar.labs.rapid7.com
 export SONAR_EMAIL=youremail@example.com
 ```
 

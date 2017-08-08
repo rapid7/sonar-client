@@ -21,7 +21,17 @@ module Sonar
     end
 
     def request(method, path, options)
-      response = connection.send(method) do |request|
+      generic_request(method, path, options, conn: connection)
+    end
+
+    # Generic request dependent of conn param
+    # @param method [Symbol] :post|:get|:get
+    # @param path [String]
+    # @param options [Hash]
+    # @param conn [Faraday::Connection]
+    # @return [Hashie::Mash]
+    def generic_request(method, path, options, conn:)
+      response = conn.send(method) do |request|
         options.delete(:connection)
         case method
         when :get
