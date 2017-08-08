@@ -3,13 +3,16 @@ sudo: false
 cache: bundler
 rvm:
   - 2.2.2
-  - jruby
+  - jruby-9.1.5.0
 before_install:
   - "echo 'gem: --no-ri --no-rdoc' > ~/.gemrc"
   - rake --version
 before_script:
   - bundle exec rake --version
 script: bundle exec rspec
+notifications:
+  email:
+    - r7_labs@rapid7.com
 #
 # Environment variables should be set in Travis repository settings per
 # https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings
