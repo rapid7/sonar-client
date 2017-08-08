@@ -5,6 +5,8 @@ require 'sonar/cli/rcfile'
 require 'sonar/search'
 require 'awesome_print'
 
+include Sonar::Search
+
 module Sonar
   class CLI < Thor
     class_option 'format', type: :string, desc: 'Flat JSON, JSON lines, or pretty printed [flat/lines/pretty]'
@@ -27,7 +29,12 @@ module Sonar
 
     desc 'search_all [QUERY TERM]', 'Search all Sonar record types'
     def search_all(term)
-      Sonar::Search::QUERY_TYPES_MAP.keys.each do |type|
+      if term =~ IS_IP
+        types = ip_search_type_names
+      else
+        types = domain_search_type_names
+      end
+      types.each do |type|
         search(type, term) rescue 'Search failed'
       end
     end

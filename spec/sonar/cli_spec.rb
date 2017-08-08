@@ -82,6 +82,22 @@ describe Sonar::CLI do
         end
       end
     end
+
+    describe 'search_all command' do
+      before do
+        allow_any_instance_of(Sonar::Client).to receive(:search).and_return(
+          Sonar::Client.new.search(fdns: '208.118.227.20', exact: true)
+        )
+      end
+      it 'returns results when searching for an IP' do
+        output = run_command('search_all 208.118.227.20')
+        expect(output).to match(/rapid7\.com/)
+      end
+      it 'returns results when searching for a domain' do
+        output = run_command('search_all rapid7.com')
+        expect(output).to match(/208\.118\.227\.20/)
+      end
+    end
   end
 
   def run_command(args)
