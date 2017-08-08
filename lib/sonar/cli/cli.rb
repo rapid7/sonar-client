@@ -65,7 +65,7 @@ module Sonar
 
     desc 'types', 'List all Sonar query types'
     def types
-      ap Search::QUERY_TYPES_MAP
+      ap QUERY_TYPES
     end
 
     desc 'config', 'Sonar config file location'
