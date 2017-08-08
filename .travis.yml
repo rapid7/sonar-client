@@ -3,7 +3,7 @@ sudo: false
 cache: bundler
 rvm:
   - 2.2.2
-  - jruby
+  - jruby-9.1.5.0
 before_install:
   - "echo 'gem: --no-ri --no-rdoc' > ~/.gemrc"
   - rake --version
