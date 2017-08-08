@@ -10,6 +10,9 @@ before_install:
 before_script:
   - bundle exec rake --version
 script: bundle exec rspec
+notifications:
+  email:
+    - r7_labs@rapid7.com
 #
 # Environment variables should be set in Travis repository settings per
 # https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings
