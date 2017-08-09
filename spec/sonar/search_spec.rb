@@ -170,14 +170,6 @@ describe Sonar::Search do
     end
   end
 
-  context "whois_ip" do
-    let(:resp) { client.search(whois_ip: '208.118.227.10') }
-
-    xit "should find rapid7.com" do
-      expect(resp['name']).to eq('TWDX-208-118-227-0-1')
-    end
-  end
-
   # TODO: actually check response
   context "raw" do
     let(:resp) { client.search(raw: '208.118.227.10') }

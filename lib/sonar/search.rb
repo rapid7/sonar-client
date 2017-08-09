@@ -18,8 +18,7 @@ module Sonar
       { name: 'ports', description: 'Open Ports', input: 'ip' },
       { name: 'processed', description: 'Open Ports (Processed)', input: 'ip' },
       { name: 'raw', description: 'Open Ports (Raw)', input: 'ip' },
-      { name: 'sslcert', description: 'Certificate Details', input: 'sha' },
-      { name: 'whois_ip', description: 'Whois (IP)', input: 'ip' }
+      { name: 'sslcert', description: 'Certificate Details', input: 'sha' }
     ]
 
     ##
