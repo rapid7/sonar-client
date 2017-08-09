@@ -83,6 +83,13 @@ describe Sonar::CLI do
       end
     end
 
+    describe 'sonar types command' do
+      it 'returns all sonar search types' do
+        output = run_command('types')
+        expect(output).to match(/Certificate to IPs/)
+      end
+    end
+
     describe 'search_all command' do
       before do
         allow_any_instance_of(Sonar::Client).to receive(:search).and_return(

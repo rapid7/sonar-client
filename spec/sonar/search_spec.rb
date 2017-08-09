@@ -4,6 +4,24 @@ require 'spec_helper'
 describe Sonar::Search do
   let(:client) { Sonar::Client.new }
 
+  describe "#ip_search_type_names" do
+    it 'includes rdns' do
+      expect(subject.ip_search_type_names).to include('rdns')
+    end
+    it 'does not include fdns' do
+      expect(subject.ip_search_type_names).to_not include('fdns')
+    end
+  end
+
+  describe "#domain_search_type_names" do
+    it 'includes fdns' do
+      expect(subject.domain_search_type_names).to include('fdns')
+    end
+    it 'does not include rdns' do
+      expect(subject.domain_search_type_names).to_not include('rdns')
+    end
+  end
+
   describe "parameters" do
     describe "query type" do
       context "with an invalid query type" do
