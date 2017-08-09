@@ -10,7 +10,7 @@ include Sonar::Search
 
 module Sonar
   class CLI < Thor
-    class_option 'format', type: :string, desc: 'Flat JSON, JSON lines, or pretty printed [flat/lines/pretty]'
+    class_option 'format', type: :string, desc: 'Flat JSON (include empty collections), JSON lines of collection data (default), or pretty printed [flat/lines/pretty]'
 
     def initialize(*)
       @config = Sonar::RCFile.instance.load_file
