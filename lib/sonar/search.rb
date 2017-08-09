@@ -15,7 +15,6 @@ module Sonar
       'processed'   => 'Open Ports (Processed)',
       'raw'         => 'Open Ports (Raw)',
       'sslcert'     => 'Certificate Details',
-      'whois_ip'    => 'Whois (IP)'
     }
 
     ##
