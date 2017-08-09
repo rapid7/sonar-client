@@ -23,6 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'multi_json'
   spec.add_dependency 'thor'
   spec.add_dependency 'awesome_print'
+  spec.add_dependency 'table_print'
 
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"

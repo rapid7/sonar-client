@@ -4,6 +4,7 @@ require 'thor'
 require 'sonar/cli/rcfile'
 require 'sonar/search'
 require 'awesome_print'
+require 'table_print'
 
 include Sonar::Search
 
@@ -53,7 +54,8 @@ module Sonar
 
     desc 'types', 'List all Sonar query types'
     def types
-      ap QUERY_TYPES
+      tp.set :io, $stdout
+      tp QUERY_TYPES, :name, { description: { width: 100 } }, :input
     end
 
     desc 'config', 'Sonar config file location'
