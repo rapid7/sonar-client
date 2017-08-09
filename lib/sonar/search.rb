@@ -48,6 +48,21 @@ module Sonar
       QUERY_TYPES.map { |type| type[:name] }
     end
 
+    def handle_search_response(resp)
+      errors = 0
+      if resp.is_a?(Sonar::Request::RequestIterator)
+        resp.each do |data|
+          errors += 1 if data.key?('errors') || data.key?('error')
+          print_json(cleanup_data(data), options['format'])
+        end
+      else
+        errors += 1 if resp.key?('errors') || resp.key?('error')
+        print_json(cleanup_data(resp), options['format'])
+      end
+
+      raise Search::SearchError.new("Encountered #{errors} errors while searching") if errors > 0
+    end
+
     ##
     # Get search
     #
