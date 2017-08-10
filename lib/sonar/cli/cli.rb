@@ -4,10 +4,13 @@ require 'thor'
 require 'sonar/cli/rcfile'
 require 'sonar/search'
 require 'awesome_print'
+require 'table_print'
+
+include Sonar::Search
 
 module Sonar
   class CLI < Thor
-    class_option 'format', type: :string, desc: 'Flat JSON, JSON lines, or pretty printed [flat/lines/pretty]'
+    class_option 'format', type: :string, desc: 'Flat JSON (include empty collections), JSON lines of collection data (default), or pretty printed [flat/lines/pretty]'
 
     def initialize(*)
       @config = Sonar::RCFile.instance.load_file
@@ -25,40 +28,34 @@ module Sonar
       ap @client.usage
     end
 
-    desc 'search_all [QUERY TERM]', 'Search all Sonar record types'
-    def search_all(term)
-      Sonar::Search::QUERY_TYPES_MAP.keys.each do |type|
-        search(type, term) rescue 'Search failed'
-      end
-    end
-
-    desc 'search [QUERY TYPE] [QUERY TERM]', 'Search anything from Sonars'
+    desc 'search [QUERY TYPE] [QUERY TERM]', 'Search any query type from Sonar or specify \'all\' as QUERY TYPE to search them all.'
     method_option 'record_limit', type: :numeric, aliases: '-n', desc: 'Maximum number of records to fetch'
     method_option 'exact', type: :boolean, aliases: '-e', desc: 'Search for the query string exactly, do not include partial string matches'
     def search(type, term)
-      @query = {}
-      @query[type.to_sym] = term
-      @query[:limit] = options['record_limit']
-      @query[:exact] = options['exact']
-      resp = @client.search(@query)
+      types = [type]
 
-      errors = 0
-      if resp.is_a?(Sonar::Request::RequestIterator)
-        resp.each do |data|
-          errors += 1 if data.key?('errors') || data.key?('error')
-          print_json(cleanup_data(data), options['format'])
+      if type == 'all'
+        if term =~ IS_IP
+          types = ip_search_type_names
+        else
+          types = domain_search_type_names
         end
-      else
-        errors += 1 if resp.key?('errors') || resp.key?('error')
-        print_json(cleanup_data(resp), options['format'])
       end
 
-      raise Search::SearchError.new("Encountered #{errors} errors while searching") if errors > 0
+      types.each do |type|
+        @query = {}
+        @query[type.to_sym] = term
+        @query[:limit] = options['record_limit']
+        @query[:exact] = options['exact']
+        resp = @client.search(@query)
+        handle_search_response(resp)
+      end
     end
 
     desc 'types', 'List all Sonar query types'
     def types
-      ap Search::QUERY_TYPES_MAP
+      tp.set :io, $stdout
+      tp QUERY_TYPES, :name, { description: { width: 100 } }, :input
     end
 
     desc 'config', 'Sonar config file location'
