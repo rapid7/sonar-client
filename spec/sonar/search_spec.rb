@@ -107,8 +107,8 @@ describe Sonar::Search do
       it "returns hashie response of search" do
         expect(resp.class).to eq(Hashie::Mash)
       end
-      it "finds fdnsname 208.118.227.10 for rapid7.com" do
-        expect(resp['collection'].any? { |x| x['address'] == '208.118.227.10' }).to be(true)
+      it "finds fdnsname 205.251.215.31 for rapid7.com" do
+        expect(resp['collection'].any? { |x| x['address'] == '205.251.215.31' }).to be(true)
       end
     end
 
