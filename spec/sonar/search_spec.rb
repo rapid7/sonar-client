@@ -38,7 +38,7 @@ describe Sonar::Search do
       end
       it "should match when #exact is false" do
         resp = client.search(fdns: ".rapid7.com", exact: false)
-        expect(resp["collection"].size).to be > 0 
+        expect(resp["collection"].size).to be > 0
       end
     end
 
@@ -107,8 +107,8 @@ describe Sonar::Search do
       it "returns hashie response of search" do
         expect(resp.class).to eq(Hashie::Mash)
       end
-      it "finds fdnsname 205.251.215.31 for rapid7.com" do
-        expect(resp['collection'].any? { |x| x['address'] == '205.251.215.31' }).to be(true)
+      it "finds fdnsname 205.251.215.69 for rapid7.com" do
+        expect(resp['collection'].any? { |x| x['address'] == '205.251.215.69' }).to be(true)
       end
     end
 
