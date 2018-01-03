@@ -5,6 +5,8 @@ rvm:
   - 2.2.2
   - jruby-9.1.9.0
 before_install:
+  - gem install bundler
+  - gem update bundler
   - "echo 'gem: --no-ri --no-rdoc' > ~/.gemrc"
   - rake --version
 before_script:
