@@ -108,7 +108,7 @@ describe Sonar::Search do
         expect(resp.class).to eq(Hashie::Mash)
       end
       it "finds fdnsname 205.251.215.* IP addresses for rapid7.com" do
-        expect(resp['collection'].select { |x| x['address'].match(/^205\.251\.215\.\d{1,3}$/) }.size).to be > 3
+        expect(resp['collection'].select { |x| x['address'].match(/^205\.251\.215\.\d{1,3}$/) }.size).to be >= 2
       end
     end
 
