@@ -58,27 +58,27 @@ describe Sonar::CLI do
       end
     end
     describe 'searching with #exact --exact option' do
-      context 'client that returns fdns for rapid7 IP exact' do
+      context 'client that returns fdns for rapid7 exact' do
         before do
           allow_any_instance_of(Sonar::Client).to receive(:search).and_return(
-            Sonar::Client.new.search(fdns: '208.118.227.20', exact: true)
+            Sonar::Client.new.search(fdns: 'rapid7.com', exact: true)
           )
         end
         it 'matches exactly with --exact' do
-          output =  run_command('search fdns 208.118.227.20 --exact')
+          output =  run_command('search fdns rapid7.com --exact')
           expect(JSON.parse(output)['collection'].size).to be >= 1
-          expect(JSON.parse(output)['collection'].any? { |c| c['name'] == '208.118.227.20' }).to be(true)
+          expect(JSON.parse(output)['collection'].map{ |x| x['name'] }.uniq).to eq ['rapid7.com']
         end
       end
       context 'client that returns fdns for rapid7 IP' do
         before do
           allow_any_instance_of(Sonar::Client).to receive(:search).and_return(
-            Sonar::Client.new.search(fdns: '208.118.227.20')
+            Sonar::Client.new.search(fdns: 'rapid7.com')
           )
         end
-        it 'matches exactly without --exact' do
-          output =  run_command('search fdns 208.118.227.20')
-          expect(JSON.parse(output)['collection'].size).to be >  1
+        it 'matches many domains without --exact' do
+          output =  run_command('search fdns rapid7.com')
+          expect(JSON.parse(output)['collection'].map{ |x| x['name'] }.uniq.size).to be >  1
         end
       end
     end
