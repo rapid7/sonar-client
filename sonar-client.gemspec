@@ -31,8 +31,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "simplecov"
   spec.add_development_dependency "simplecov-rcov"
   spec.add_development_dependency "yard"
-  spec.add_development_dependency "vcr", '~> 2.8.0'
+  spec.add_development_dependency "vcr", '~> 4.0.0'
   spec.add_development_dependency "shoulda"
-  spec.add_development_dependency "webmock", '~> 3.5.0'
+  spec.add_development_dependency "webmock", '~> 3.5.1'
   spec.add_development_dependency "api_matchers"
 end
