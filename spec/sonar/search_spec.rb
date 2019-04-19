@@ -115,8 +115,8 @@ describe Sonar::Search do
     context "fdnsip" do
       let(:resp) { client.search(fdns: '208.118.227.10') }
 
-      it "finds fdnsip rapid7.com at 208.118.227.10" do
-        expect(resp['collection'].any? { |x| x['address'].match('rapid7') }).to be(true)
+      it "finds fdnsip rapid7 domains at 208.118.227.10" do
+        expect(resp['collection'].any? { |x| x['address'].match('rapidseven') }).to be(true)
       end
     end
 
