@@ -3,6 +3,7 @@
 require 'thor'
 require 'sonar/cli/rcfile'
 require 'sonar/search'
+require 'sonar/request'
 require 'awesome_print'
 require 'table_print'
 
