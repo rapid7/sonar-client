@@ -3,10 +3,9 @@
 require 'thor'
 require 'sonar/cli/rcfile'
 require 'sonar/search'
+require 'sonar/request'
 require 'awesome_print'
 require 'table_print'
-
-include Sonar::Search
 
 module Sonar
   class CLI < Thor
@@ -35,10 +34,10 @@ module Sonar
       types = [type]
 
       if type == 'all'
-        if term =~ IS_IP
-          types = ip_search_type_names
+        if term =~ Search::IS_IP
+          types = @client.ip_search_type_names
         else
-          types = domain_search_type_names
+          types = @client.domain_search_type_names
         end
       end
 
@@ -55,7 +54,7 @@ module Sonar
     desc 'types', 'List all Sonar query types'
     def types
       tp.set :io, $stdout
-      tp QUERY_TYPES, :name, { description: { width: 100 } }, :input
+      tp Search::QUERY_TYPES, :name, { description: { width: 100 } }, :input
     end
 
     desc 'config', 'Sonar config file location'
@@ -81,6 +80,21 @@ module Sonar
         # TODO: use a faster JSON generator?
         puts(data.to_json)
       end
+    end
+
+    def handle_search_response(resp)
+      errors = 0
+      if resp.is_a?(Sonar::Request::RequestIterator)
+        resp.each do |data|
+          errors += 1 if data.key?('errors') || data.key?('error')
+          print_json(cleanup_data(data), options['format'])
+        end
+      else
+        errors += 1 if resp.key?('errors') || resp.key?('error')
+        print_json(cleanup_data(resp), options['format'])
+      end
+
+      raise Search::SearchError.new("Encountered #{errors} errors while searching") if errors > 0
     end
 
     # Clean up whitespace and parse JSON values in responses

@@ -2,23 +2,26 @@
 require 'spec_helper'
 
 describe Sonar::Search do
+  let(:dummy_class) {
+    Class.new { extend Sonar::Search }
+  }
   let(:client) { Sonar::Client.new }
 
   describe "#ip_search_type_names" do
     it 'includes rdns' do
-      expect(subject.ip_search_type_names).to include('rdns')
+      expect(dummy_class.ip_search_type_names).to include('rdns')
     end
     it 'does not include fdns' do
-      expect(subject.ip_search_type_names).to_not include('fdns')
+      expect(dummy_class.ip_search_type_names).to_not include('fdns')
     end
   end
 
   describe "#domain_search_type_names" do
     it 'includes fdns' do
-      expect(subject.domain_search_type_names).to include('fdns')
+      expect(dummy_class.domain_search_type_names).to include('fdns')
     end
     it 'does not include rdns' do
-      expect(subject.domain_search_type_names).to_not include('rdns')
+      expect(dummy_class.domain_search_type_names).to_not include('rdns')
     end
   end
 
