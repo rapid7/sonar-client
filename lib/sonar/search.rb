@@ -8,17 +8,8 @@ module Sonar
 
     # Implemented search query types
     QUERY_TYPES = [
-      { name: 'certificate', description: 'Certificate lookup', input: 'sha' },
-      { name: 'certips', description: 'Certificate to IPs', input: 'sha' },
-      { name: 'rdns', description: 'IP to Reverse DNS Lookup or DNS Lookup to IP', input: 'ip' },
       { name: 'fdns', description: 'Domains to IP or IPs to Domain', input: 'domain' },
-      { name: 'ipcerts', description: 'IP to Certificates', input: 'ip' },
-      { name: 'namecerts', description: 'Domain to Certificates', input: 'domain' },
-      { name: 'links_to', description: 'HTTP References to Domain', input: 'domain' },
       { name: 'ports', description: 'Open Ports', input: 'ip' },
-      { name: 'processed', description: 'Open Ports (Processed)', input: 'ip' },
-      { name: 'raw', description: 'Open Ports (Raw)', input: 'ip' },
-      { name: 'sslcert', description: 'Certificate Details', input: 'sha' },
       { name: 'all', description: 'Search all appropriate search types for an IP or domain', input: 'all' }
     ]
 

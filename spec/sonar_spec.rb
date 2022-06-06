@@ -57,7 +57,7 @@ describe Sonar, skip_autoconfig: true do
       end
       puts Sonar.api_url
       client = Sonar::Client.new
-      @resp = client.search(rdns: "hp.com")
+      @resp = client.search(fdns: "hp.com")
     end
 
     it "should return unauthorized" do
