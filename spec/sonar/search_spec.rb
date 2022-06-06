@@ -56,8 +56,10 @@ describe Sonar::Search do
         it "should return 120 x 25-record blocks" do
           num_blocks = 0
           resp.each do |resp_block|
-            expect(resp_block['collection'].size).to eq(25)
-            num_blocks += 1
+            if resp_block
+              expect(resp_block['collection'].size).to eq(25)
+              num_blocks += 1
+            end
           end
           expect(num_blocks).to eq(120)
         end
