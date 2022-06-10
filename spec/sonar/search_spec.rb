@@ -34,17 +34,6 @@ describe Sonar::Search do
       end
     end
 
-    describe "exact" do
-      it "shouldn't match anything when #exact is true" do
-        resp = client.search(fdns: ".rapid7.com", exact: true)
-        expect(resp["collection"].size).to eq(0)
-      end
-      it "should match when #exact is false" do
-        resp = client.search(fdns: ".rapid7.com", exact: false)
-        expect(resp["collection"].size).to be > 0
-      end
-    end
-
     describe "limit" do
       # The default size from APIv1/v2 is 25 records
       context "specifying the :limit to 3000 on #search" do
