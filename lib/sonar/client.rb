@@ -1,9 +1,9 @@
 # encoding: utf-8
 require 'faraday'
-require 'faraday_middleware'
+require 'faraday/follow_redirects'
+require 'faraday/rashify'
 require 'forwardable'
 require 'sonar/request'
-require 'sonar/certificate'
 require 'sonar/search'
 require 'sonar/user'
 require 'sonar/cli/cli'
@@ -14,7 +14,6 @@ module Sonar
     extend Forwardable
 
     include Request
-    include Certificate
     include Search
     include User
     include Registration
@@ -39,9 +38,11 @@ module Sonar
     def connection
       params = {}
       @conn = Faraday.new(url: api_url, params: params, headers: default_headers, ssl: { verify: true }) do |faraday|
-        faraday.use FaradayMiddleware::Mashify
-        faraday.use FaradayMiddleware::ParseJson, content_type: /\bjson$/
-        faraday.use FaradayMiddleware::FollowRedirects
+        faraday.use Faraday::FollowRedirects::Middleware
+        faraday.use Faraday::Rashify::Middleware
+        faraday.request :json
+
+        faraday.response :json
         faraday.adapter Faraday.default_adapter
       end
       @conn.headers['X-Sonar-Token'] = access_token

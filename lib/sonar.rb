@@ -1,5 +1,4 @@
 require "faraday"
-require "faraday_middleware"
 require "sonar/cli/cli"
 require "sonar/client"
 require "sonar/version"

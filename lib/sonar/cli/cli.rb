@@ -29,7 +29,6 @@ module Sonar
 
     desc 'search [QUERY TYPE] [QUERY TERM]', 'Search any query type from Sonar or specify \'all\' as QUERY TYPE to search them all.'
     method_option 'record_limit', type: :numeric, aliases: '-n', desc: 'Maximum number of records to fetch'
-    method_option 'exact', type: :boolean, aliases: '-e', desc: 'Search for the query string exactly, do not include partial string matches'
     def search(type, term)
       types = [type]
 
@@ -45,7 +44,6 @@ module Sonar
         @query = {}
         @query[type.to_sym] = term
         @query[:limit] = options['record_limit']
-        @query[:exact] = options['exact']
         resp = @client.search(@query)
         handle_search_response(resp)
       end
