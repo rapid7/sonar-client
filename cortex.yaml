@@ -1,0 +1,14 @@
+---
+info:
+  title: Sonar Client
+  x-cortex-git:
+    github:
+      alias: r7org
+      repository: rapid7/sonar-client
+  x-cortex-tag: sonar-client
+  x-cortex-type: service
+  x-cortex-domain-parents:
+  - tag: octo-and-labs
+openapi: 3.0.1
+servers:
+- url: "/"
